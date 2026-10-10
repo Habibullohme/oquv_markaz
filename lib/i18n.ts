@@ -57,6 +57,7 @@ export const STR = {
     },
     teachers: {
       eyebrow: "O'qituvchilar",
+      hint: "Sichqonchani olib boring — kartochka ochiladi",
       title: 'Sertifikatlangan mutaxassislar',
       subtitle: "Har bir o'qituvchimiz IELTS'dan kamida 8.0 olgan va CELTA yoki TESOL sertifikatiga ega.",
       // NAMUNA — haqiqiy o'qituvchilar bilan almashtiring
@@ -71,6 +72,7 @@ export const STR = {
       eyebrow: 'Natijalar',
       title: "O'quvchilarimiz natijalari",
       from: 'Boshida',
+      gain: "o'sish",
       to: 'Natija',
       weeks: 'hafta',
       // NAMUNA — haqiqiy natijalar va fikrlar bilan almashtiring
@@ -99,6 +101,9 @@ export const STR = {
     faq: {
       eyebrow: 'Savollar',
       title: "Ko'p beriladigan savollar",
+      askTitle: 'Savolingiz qoldimi?',
+      askText: "Telegramda yozing — administratorimiz bir necha daqiqada javob beradi.",
+      askCta: 'Telegramda yozish',
       items: [
         { q: 'Sinov darsi haqiqatan bepulmi?', a: 'Ha. Diagnostik test va bitta sinov darsi bepul. Shundan keyin sizga mos guruhni tavsiya qilamiz.' },
         { q: "Darajam past, baribir boshlasam bo'ladimi?", a: "Albatta. A2 darajadan General English kursi bilan boshlab, keyin IELTS guruhiga o'tasiz." },
@@ -183,6 +188,7 @@ export const STR = {
     },
     teachers: {
       eyebrow: 'Teachers',
+      hint: 'Hover over a card to open it',
       title: 'Certified specialists',
       subtitle: 'Every teacher holds IELTS 8.0 or higher and a CELTA or TESOL certificate.',
       items: [
@@ -196,6 +202,7 @@ export const STR = {
       eyebrow: 'Results',
       title: 'Our students’ results',
       from: 'Start',
+      gain: 'gain',
       to: 'Result',
       weeks: 'weeks',
       items: [
@@ -222,6 +229,9 @@ export const STR = {
     faq: {
       eyebrow: 'FAQ',
       title: 'Frequently asked questions',
+      askTitle: 'Still have a question?',
+      askText: 'Message us on Telegram and our administrator will reply within minutes.',
+      askCta: 'Message on Telegram',
       items: [
         { q: 'Is the trial lesson really free?', a: 'Yes. The diagnostic test and one trial lesson are free. Then we recommend the right group for you.' },
         { q: 'My level is low. Can I still start?', a: 'Of course. Start from A2 with General English, then move up to an IELTS group.' },

@@ -1,9 +1,23 @@
 'use client'
 import { useState } from 'react'
+import { ArrowRight, Check } from 'lucide-react'
+import Roll from './Roll'
 import type { Dict } from '@/lib/i18n'
 
 const EMPTY = { name: '', phone: '', email: '', message: '', website: '' }
-const inputCls = 'mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 outline-none focus:ring-2 focus:ring-brand-600'
+
+// Suzuvchi yozuvli maydon: bo'sh bo'lsa yozuv ichida, bosilganda yoki to'ldirilganda tepaga ko'tariladi
+function Field({ id, label, textarea, ...rest }: { id: string, label: string, textarea?: boolean } & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const cls = 'peer block w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.03] px-4 pb-2.5 pt-6 outline-none transition focus:border-brand-500 focus:bg-white dark:focus:border-sun-400 dark:focus:bg-transparent'
+  return (
+    <div className="relative">
+      {textarea
+        ? <textarea id={id} placeholder=" " rows={4} className={`${cls} resize-none`} {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} />
+        : <input id={id} placeholder=" " className={cls} {...(rest as React.InputHTMLAttributes<HTMLInputElement>)} />}
+      <label htmlFor={id} className="pointer-events-none absolute left-4 top-4 origin-left text-slate-500 dark:text-slate-400 transition-all duration-300 peer-focus:top-2 peer-focus:scale-[.78] peer-focus:text-brand-600 dark:peer-focus:text-sun-400 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:scale-[.78]">{label}</label>
+    </div>
+  )
+}
 
 export default function ContactForm({ labels }: { labels: Dict['contact'] }) {
   const [form, setForm] = useState(EMPTY)
@@ -25,7 +39,7 @@ export default function ContactForm({ labels }: { labels: Dict['contact'] }) {
       const r = (e.target as HTMLFormElement).querySelector('button')?.getBoundingClientRect()
       ;(window as unknown as { __confetti?: (x?: number, y?: number) => void }).__confetti?.(r ? r.left + r.width / 2 : undefined, r ? r.top : undefined)
       setForm(EMPTY)
-      setTimeout(() => setStatus(null), 5000)
+      setTimeout(() => setStatus(null), 6000)
     } catch {
       setStatus({ ok: false, text: labels.error })
     } finally {
@@ -33,34 +47,29 @@ export default function ContactForm({ labels }: { labels: Dict['contact'] }) {
     }
   }
 
+  const set = (k: keyof typeof EMPTY) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value })
+
   return (
-    <form className="mt-6 space-y-4" onSubmit={submit} noValidate>
+    <form className="relative space-y-4" onSubmit={submit} noValidate>
       {/* Botlar uchun tuzoq — odamlarga ko'rinmaydi */}
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" value={form.website} onChange={e=>setForm({...form, website: e.target.value})} />
-      <div>
-        <label htmlFor="cf-name" className="text-sm font-medium">{labels.name}</label>
-        <input id="cf-name" required maxLength={100} autoComplete="name" value={form.name} onChange={e=>setForm({...form, name: e.target.value})} className={inputCls} placeholder={labels.namePh} />
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" value={form.website} onChange={set('website')} />
+      <Field id="cf-name" label={labels.name} required maxLength={100} autoComplete="name" value={form.name} onChange={set('name')} />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Field id="cf-phone" label={labels.phone} type="tel" required maxLength={30} autoComplete="tel" inputMode="tel" value={form.phone} onChange={set('phone')} />
+        <Field id="cf-email" label={labels.email} type="email" maxLength={120} autoComplete="email" value={form.email} onChange={set('email')} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="cf-phone" className="text-sm font-medium">{labels.phone}</label>
-          <input id="cf-phone" type="tel" required maxLength={30} autoComplete="tel" inputMode="tel" value={form.phone} onChange={e=>setForm({...form, phone: e.target.value})} className={inputCls} placeholder="+998 90 123 45 67" />
-        </div>
-        <div>
-          <label htmlFor="cf-email" className="text-sm font-medium">{labels.email}</label>
-          <input id="cf-email" type="email" maxLength={120} autoComplete="email" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} className={inputCls} placeholder="you@example.com" />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="cf-message" className="text-sm font-medium">{labels.message}</label>
-        <textarea id="cf-message" required maxLength={2000} value={form.message} onChange={e=>setForm({...form, message: e.target.value})} rows={4} className={inputCls} placeholder={labels.messagePh}></textarea>
-      </div>
-      <button disabled={sending} className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 font-semibold text-white hover:bg-brand-800 disabled:opacity-60">
-        {sending ? labels.sending : labels.submit}
+      <Field id="cf-message" label={labels.message} textarea required maxLength={2000} value={form.message} onChange={set('message')} />
+      <button disabled={sending} data-magnetic className="group flex w-full items-center justify-between gap-3 rounded-2xl bg-brand-600 py-2 pl-6 pr-2 font-bold text-white transition hover:bg-brand-700 disabled:opacity-60 dark:bg-sun-400 dark:text-ink-900 dark:hover:bg-sun-300">
+        <Roll text={sending ? labels.sending : labels.submit} />
+        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 dark:bg-ink-900/10 transition duration-500 group-hover:rotate-[-45deg]"><ArrowRight className="h-5 w-5" /></span>
       </button>
-      {status && (
-        <div role="status" className={`mt-3 rounded-xl px-4 py-3 ${status.ok ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' : 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300'}`}>
-          {status.text}
+      {status && !status.ok && (
+        <div role="status" className="rounded-xl bg-red-50 dark:bg-red-900/30 px-4 py-3 text-red-700 dark:text-red-300">{status.text}</div>
+      )}
+      {status?.ok && (
+        <div role="status" className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 rounded-2xl bg-white/95 dark:bg-ink-900/95 text-center animate-fade-up">
+          <span className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500 text-white"><Check className="h-10 w-10 check-draw" strokeWidth={3} /></span>
+          <div className="font-display text-xl font-bold">{status.text}</div>
         </div>
       )}
     </form>

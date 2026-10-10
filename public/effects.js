@@ -1,12 +1,11 @@
 /* Sayt animatsiyalari. HTML'da data-atributlar bilan ishlaydi:
-   data-reveal="up|left|right|zoom"  data-delay="150"  — scroll qilganda chiqib keladi
+   data-reveal="up|left|right|zoom"  data-delay="150"  — scroll qilganda chiqib keladi (data-in qo'yiladi; class emas, chunki React className'ni qayta yozadi)
    data-magnetic                                        — tugma sichqonchaga tortiladi
    data-tilt                                            — karta sichqoncha bilan 3D qiyshayadi
    data-parallax="0.04"                                 — sichqoncha bilan suriladi
    data-scroll-x="-0.4"                                 — scroll bilan gorizontal suriladi (+ tezlikka qarab qiyshayadi)
    data-skew                                            — scroll tezligiga qarab qiyshayadi
    data-spotlight                                       — kartada sichqoncha ortidan yorug'lik
-   data-cursor-label="Matn"                             — kursor halqasida yozuv chiqadi
    data-particles                                       — sichqonchaga javob beradigan nuqtalar maydoni (canvas)
    data-hscroll + data-hscroll-track + data-hscroll-bar — vertikal scroll bilan gorizontal suriladigan bo'lim
    #preloader                                           — ochilishdagi yuklanish ekrani
@@ -54,7 +53,7 @@
   // ---- Scroll qilganda chiqib kelish ----
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
     es.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      if (e.isIntersecting) { e.target.setAttribute('data-in', ''); io.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
 
@@ -63,7 +62,7 @@
       el.setAttribute('data-fx', '');
       var d = el.getAttribute('data-delay');
       if (d) el.style.transitionDelay = d + 'ms';
-      if (io && !reduce) io.observe(el); else el.classList.add('is-in');
+      if (io && !reduce) io.observe(el); else el.setAttribute('data-in', '');
     });
   }
   scan();
@@ -185,29 +184,11 @@
 
   if (reduce || !fine) return;
 
-  // ---- Kursor halqasi ----
-  var dot = document.createElement('div'); dot.className = 'fx-dot';
-  var ring = document.createElement('div'); ring.className = 'fx-ring';
-  var label = document.createElement('span'); label.className = 'fx-ring-label'; ring.appendChild(label);
-  document.body.appendChild(ring); document.body.appendChild(dot);
-  var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, seen = false;
-  addEventListener('pointermove', function (e) {
-    mx = e.clientX; my = e.clientY;
-    if (!seen) { seen = true; rx = mx; ry = my; root.classList.add('fx-cursor'); }
-    dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
-    var lab = e.target.closest && e.target.closest('[data-cursor-label]');
-    var t = e.target.closest && e.target.closest('a,button,input,textarea,summary,label,[data-cursor]');
-    ring.classList.toggle('has-label', !!lab);
-    if (lab) label.textContent = lab.getAttribute('data-cursor-label');
-    ring.classList.toggle('is-hover', !!t && !lab);
-  }, { passive: true });
-  document.addEventListener('pointerleave', function () { root.classList.remove('fx-cursor'); seen = false; });
-  addEventListener('pointerdown', function () { ring.classList.add('is-down'); });
-  addEventListener('pointerup', function () { ring.classList.remove('is-down'); });
+  // ---- Sichqoncha bilan parallaks ----
+  var mx = innerWidth / 2, my = innerHeight / 2;
+  addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
 
   (function loop() {
-    rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-    ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)';
     var cx = (mx / innerWidth - 0.5), cy = (my / innerHeight - 0.5);
     qa('[data-parallax]').forEach(function (el) {
       var k = parseFloat(el.getAttribute('data-parallax')) * 1000;

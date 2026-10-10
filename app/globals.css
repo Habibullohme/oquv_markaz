@@ -44,7 +44,7 @@ input[type=range].band { @apply w-full cursor-pointer accent-brand-600; }
 .fx [data-reveal="left"] { transform: translateX(-60px); }
 .fx [data-reveal="right"] { transform: translateX(60px); }
 .fx [data-reveal="zoom"] { transform: scale(.88); filter: blur(6px); }
-.fx [data-reveal].is-in { opacity: 1; transform: none; filter: none; }
+.fx [data-reveal][data-in] { opacity: 1; transform: none; filter: none; }
 
 /* Sarlavha so'zlari birma-bir ko'tarilib chiqadi */
 .word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .08em; margin-bottom: -.08em; }
@@ -53,17 +53,6 @@ input[type=range].band { @apply w-full cursor-pointer accent-brand-600; }
 
 .fx-progress { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 70; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, theme('colors.brand.500'), theme('colors.sun.400')); pointer-events: none; }
 
-.fx-dot, .fx-ring { position: fixed; left: 0; top: 0; z-index: 80; pointer-events: none; border-radius: 9999px; opacity: 0; transition: opacity .3s; }
-.fx-cursor .fx-dot, .fx-cursor .fx-ring { opacity: 1; }
-.fx-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: theme('colors.brand.600'); }
-.dark .fx-dot { background: theme('colors.sun.400'); }
-.fx-ring { width: 36px; height: 36px; margin: -18px 0 0 -18px; border: 1.5px solid theme('colors.brand.500'); }
-.fx-ring::after { content: ''; position: absolute; inset: 0; border-radius: inherit; transition: transform .35s cubic-bezier(.2,.8,.2,1), background-color .35s; }
-.fx-ring { transition: opacity .3s, width .35s, height .35s, margin .35s, border-color .35s, background-color .35s; }
-.fx-ring.is-hover { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(75,85,245,.12); border-color: transparent; }
-.fx-ring.is-down { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
-.dark .fx-ring { border-color: theme('colors.sun.400'); }
-.dark .fx-ring.is-hover { background: rgba(255,212,59,.14); }
 
 [data-magnetic] { transition: translate .5s cubic-bezier(.2,.8,.2,1); }
 [data-magnetic].is-mag { transition: translate .12s linear; }
@@ -105,7 +94,7 @@ html.lenis { scroll-behavior: auto; }
 .sw { display: inline-block; white-space: nowrap; overflow: hidden; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; }
 .ch { display: inline-block; }
 .fx .split .ch { transform: translateY(105%); transition: transform .9s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--c) * 16ms + 120ms); }
-.fx .is-in .split .ch, .fx .split.is-in .ch { transform: none; }
+.fx [data-in] .split .ch, .fx .split[data-in] .ch { transform: none; }
 
 /* ===== Tugmada yozuv aylanishi ===== */
 .roll { display: inline-flex; overflow: hidden; height: 1.3em; line-height: 1.3em; }
@@ -113,14 +102,40 @@ html.lenis { scroll-behavior: auto; }
 .roll > span::after { content: attr(data-text); display: block; }
 :is(a, button):hover .roll > span { transform: translateY(-1.3em); }
 
-/* ===== Kursor yozuvi, konfetti ===== */
-.fx-ring { display: flex; align-items: center; justify-content: center; }
-.fx-ring-label { font: 800 12px/1.1 theme('fontFamily.sans'); color: #fff; opacity: 0; transform: scale(.6); transition: opacity .3s, transform .3s; text-align: center; padding: 0 8px; white-space: nowrap; }
-.fx-ring.has-label { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: theme('colors.ink.900'); border-color: transparent; }
-.dark .fx-ring.has-label { background: theme('colors.sun.400'); }
-.dark .fx-ring.has-label .fx-ring-label { color: theme('colors.ink.900'); }
-.fx-ring.has-label .fx-ring-label { opacity: 1; transform: none; }
-.fx-cursor .fx-ring.has-label ~ .fx-dot { opacity: 0; }
+/* ===== Konfetti ===== */
 .fx-confetti { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 90; pointer-events: none; }
 /* Yon tomondan chiqib keladigan elementlar sahifani kengaytirmasin (sticky'ni buzmaydi) */
 main, footer { overflow-x: clip; }
+
+/* ===== O'qituvchilar paneli va FAQ: reveal bilan birga o'z o'tishlari ===== */
+.fx [data-reveal].tgrow { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), filter .9s, flex-grow .7s cubic-bezier(.7,0,.2,1); }
+.fx [data-reveal].tcolors { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), border-color .5s, background-color .5s, box-shadow .5s; }
+
+/* ===== Natijalar: band shkalasi to'lib boradi ===== */
+.fx [data-reveal] .grow-bar { transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.7,0,.2,1) .4s; }
+.fx [data-reveal] .grow-dot { scale: 0; transition: scale .5s cubic-bezier(.3,1.6,.5,1) 1.6s; }
+.fx [data-in] .grow-bar { transform: none; }
+.fx [data-in] .grow-dot { scale: 1; }
+
+/* ===== Narxlar: aylanib turadigan nurli chegara ===== */
+@property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.glow-border { isolation: isolate; }
+.glow-border::before, .glow-border::after { content: ''; position: absolute; inset: -2px; border-radius: 30px; z-index: -1; background: conic-gradient(from var(--ang), theme('colors.sun.400'), theme('colors.brand.500'), transparent 35%, transparent 60%, theme('colors.sun.400')); animation: ang 4s linear infinite; }
+.glow-border::after { filter: blur(22px); opacity: .55; }
+@keyframes ang { to { --ang: 360deg; } }
+
+/* ===== Aloqa bo'limi: suzib yuruvchi nurlar ===== */
+.contact-orbs span { position: absolute; border-radius: 9999px; filter: blur(60px); opacity: .55; animation: orb 14s ease-in-out infinite alternate; }
+.contact-orbs span:nth-child(1) { width: 22rem; height: 22rem; background: theme('colors.sun.400'); top: -8rem; right: -6rem; }
+.contact-orbs span:nth-child(2) { width: 18rem; height: 18rem; background: theme('colors.brand.400'); bottom: -8rem; left: 10%; animation-duration: 18s; animation-delay: -6s; }
+.contact-orbs span:nth-child(3) { width: 14rem; height: 14rem; background: theme('colors.rose.400'); top: 30%; left: 45%; opacity: .3; animation-duration: 22s; animation-delay: -3s; }
+@keyframes orb { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(-6rem, 4rem) scale(1.15); } 100% { transform: translate(4rem, -3rem) scale(.9); } }
+
+/* Muvaffaqiyat belgisi chiziladi */
+.check-draw path, .check-draw polyline { stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw .6s .2s cubic-bezier(.6,0,.2,1) forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* ===== Footer: ulkan yozuv harflari sichqonchaga javob beradi ===== */
+.wm-ch { transition: color .3s; }
+.wm-ch .ch { transition: transform .9s cubic-bezier(.2,.8,.2,1), color .3s; }
+[data-in] .wm-ch:hover .ch { transform: translateY(-14%) skewX(-8deg); color: theme('colors.sun.400'); transition-delay: 0s; }
