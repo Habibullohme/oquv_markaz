@@ -12,7 +12,7 @@ export default function Pricing({ T }: { T: Dict['pricing'] }) {
           {T.plans.map((p, i) => {
             const pop = i === 1
             return (
-              <div key={p.name} className={`relative flex flex-col rounded-3xl p-8 ${pop ? 'bg-ink-900 dark:bg-brand-700 text-white shadow-lift lg:-my-4 lg:py-12' : 'border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900'}`}>
+              <div key={p.name} data-reveal="up" data-delay={String(i * 120)} data-spotlight={pop ? undefined : ''} className={`relative flex flex-col rounded-3xl p-8 ${pop ? 'bg-ink-900 dark:bg-brand-700 text-white shadow-lift lg:-my-4 lg:py-12' : 'border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900'}`}>
                 {pop && <span className="absolute -top-3 left-8 rounded-full bg-sun-400 px-3 py-1 text-xs font-extrabold text-ink-900">{T.popular}</span>}
                 <h3 className="font-display text-lg font-bold">{p.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1">

@@ -11,9 +11,9 @@ export default function Teachers({ T }: { T: Dict['teachers'] }) {
         <SectionHead eyebrow={T.eyebrow} title={T.title} subtitle={T.subtitle} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {T.items.map((t, i) => (
-            <article key={t.name} className="group rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900 p-3 transition hover:-translate-y-1 hover:shadow-lift">
+            <article key={t.name} data-reveal="up" data-delay={String(i * 110)} data-spotlight className="group rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900 p-3 transition hover:-translate-y-1 hover:shadow-lift">
               <div className={`relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${TONES[i % TONES.length]}`}>
-                <span className="font-display text-5xl font-extrabold text-white/90">{t.name.split(' ').map(w => w[0]).join('')}</span>
+                <span className="font-display text-5xl font-extrabold text-white/90 transition duration-500 group-hover:scale-125 group-hover:-rotate-6">{t.name.split(' ').map(w => w[0]).join('')}</span>
                 <span className="absolute right-3 top-3 rounded-xl bg-white/95 px-2.5 py-1 font-display text-xs font-extrabold text-ink-900">IELTS {t.band}</span>
               </div>
               <div className="px-3 pb-3 pt-4">

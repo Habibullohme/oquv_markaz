@@ -34,7 +34,7 @@ export default function Stats({ items }: { items: Dict['stats'] }) {
       <Container>
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-200 dark:bg-white/10 lg:grid-cols-4">
           {items.map((s, i) => (
-            <div key={i} className="bg-white dark:bg-ink-900 p-6 md:p-8">
+            <div key={i} data-reveal="zoom" data-delay={String(i * 100)} className="bg-white dark:bg-ink-900 p-6 md:p-8">
               <div className="font-display text-3xl md:text-5xl font-extrabold text-brand-700 dark:text-white">
                 <Counter value={s.value} decimals={s.decimals} prefix={s.prefix} suffix={s.suffix} />
               </div>

@@ -9,8 +9,8 @@ export default function Results({ T }: { T: Dict['results'] }) {
       <Container>
         <SectionHead eyebrow={T.eyebrow} title={T.title} />
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {T.items.map(r => (
-            <figure key={r.name} className="flex flex-col rounded-3xl bg-white dark:bg-ink-900 border border-slate-200 dark:border-white/10 p-7">
+          {T.items.map((r, i) => (
+            <figure key={r.name} data-reveal={i === 0 ? 'left' : i === 2 ? 'right' : 'up'} data-delay={String(i * 120)} data-spotlight className="flex flex-col rounded-3xl bg-white dark:bg-ink-900 border border-slate-200 dark:border-white/10 p-7">
               <div className="flex items-end gap-4">
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">{T.from}</div>

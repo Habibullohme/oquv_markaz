@@ -15,8 +15,8 @@ export default function Contact({ T }: { T: Dict['contact'] }) {
   return (
     <section id="contact" className="py-20 md:py-28">
       <Container>
-        <div className="relative overflow-hidden rounded-[32px] bg-brand-700 p-6 sm:p-10 md:p-14 text-white">
-          <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-sun-400/30 blur-3xl" aria-hidden="true" />
+        <div data-reveal="zoom" className="relative overflow-hidden rounded-[32px] bg-brand-700 p-6 sm:p-10 md:p-14 text-white">
+          <div data-parallax="0.05" className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-sun-400/30 blur-3xl" aria-hidden="true" />
           <div className="absolute inset-0 grid-bg opacity-40" aria-hidden="true" />
           <div className="relative grid gap-10 lg:grid-cols-2">
             <div>

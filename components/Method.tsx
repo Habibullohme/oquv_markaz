@@ -10,7 +10,7 @@ export default function Method({ T }: { T: Dict['method'] }) {
         <SectionHead eyebrow={T.eyebrow} title={T.title} light />
         <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {T.steps.map((s, i) => (
-            <li key={s.title} className="relative">
+            <li key={s.title} data-reveal="up" data-delay={String(i * 140)} className="relative">
               <div className="flex items-center gap-4">
                 <span className="font-display text-5xl font-extrabold text-sun-400">{String(i + 1).padStart(2, '0')}</span>
                 {i < T.steps.length - 1 && <span className="hidden lg:block h-px flex-1 bg-gradient-to-r from-white/30 to-transparent" aria-hidden="true" />}

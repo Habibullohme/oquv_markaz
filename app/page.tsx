@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Ticker from '@/components/Ticker'
 import Stats from '@/components/Stats'
+import BigText from '@/components/BigText'
 import Courses from '@/components/Courses'
 import Method from '@/components/Method'
 import Teachers from '@/components/Teachers'
@@ -40,6 +41,7 @@ export default function Page() {
         <Hero T={T} />
         <Ticker items={T.results.ticker} />
         <Stats items={T.stats} />
+        <BigText />
         <Courses T={T.courses} />
         <Method T={T.method} />
         <Teachers T={T.teachers} />

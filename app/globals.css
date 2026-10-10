@@ -37,3 +37,47 @@ input[type=range].band { @apply w-full cursor-pointer accent-brand-600; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* ===== Animatsiyalar (public/effects.js) ===== */
+.fx [data-reveal] { opacity: 0; transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), filter .9s; will-change: transform, opacity; }
+.fx [data-reveal="up"], .fx [data-reveal=""] { transform: translateY(48px); }
+.fx [data-reveal="left"] { transform: translateX(-60px); }
+.fx [data-reveal="right"] { transform: translateX(60px); }
+.fx [data-reveal="zoom"] { transform: scale(.88); filter: blur(6px); }
+.fx [data-reveal].is-in { opacity: 1; transform: none; filter: none; }
+
+/* Sarlavha so'zlari birma-bir ko'tarilib chiqadi */
+.word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .08em; margin-bottom: -.08em; }
+.word > span { display: inline-block; animation: word-up .9s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 70ms + 100ms); }
+@keyframes word-up { from { transform: translateY(110%) rotate(4deg); } to { transform: none; } }
+
+.fx-progress { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 70; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, theme('colors.brand.500'), theme('colors.sun.400')); pointer-events: none; }
+
+.fx-dot, .fx-ring { position: fixed; left: 0; top: 0; z-index: 80; pointer-events: none; border-radius: 9999px; opacity: 0; transition: opacity .3s; }
+.fx-cursor .fx-dot, .fx-cursor .fx-ring { opacity: 1; }
+.fx-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: theme('colors.brand.600'); }
+.dark .fx-dot { background: theme('colors.sun.400'); }
+.fx-ring { width: 36px; height: 36px; margin: -18px 0 0 -18px; border: 1.5px solid theme('colors.brand.500'); }
+.fx-ring::after { content: ''; position: absolute; inset: 0; border-radius: inherit; transition: transform .35s cubic-bezier(.2,.8,.2,1), background-color .35s; }
+.fx-ring { transition: opacity .3s, width .35s, height .35s, margin .35s, border-color .35s, background-color .35s; }
+.fx-ring.is-hover { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(75,85,245,.12); border-color: transparent; }
+.fx-ring.is-down { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
+.dark .fx-ring { border-color: theme('colors.sun.400'); }
+.dark .fx-ring.is-hover { background: rgba(255,212,59,.14); }
+
+[data-magnetic] { transition: translate .5s cubic-bezier(.2,.8,.2,1); }
+[data-magnetic].is-mag { transition: translate .12s linear; }
+[data-tilt] { transition: transform .6s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
+[data-tilt].is-tilt { transition: transform .1s linear; }
+[data-tilt]::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(500px circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.35), transparent 45%); }
+.dark [data-tilt]::after { background: radial-gradient(500px circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.08), transparent 45%); }
+[data-tilt].is-tilt::after { opacity: 1; }
+[data-parallax] { transition: translate .4s cubic-bezier(.2,.8,.2,1); }
+[data-spotlight] { position: relative; isolation: isolate; }
+[data-spotlight]::before { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1; opacity: 0; transition: opacity .3s; background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(75,85,245,.14), transparent 60%); }
+.dark [data-spotlight]::before { background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(255,212,59,.10), transparent 60%); }
+[data-spotlight]:hover::before { opacity: 1; }
+
+.outline-text { color: transparent; -webkit-text-stroke: 1.5px theme('colors.brand.300'); }
+.dark .outline-text { -webkit-text-stroke-color: rgba(255,255,255,.22); }
+.chip { background: color-mix(in srgb, currentColor 10%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 20%, transparent); }
