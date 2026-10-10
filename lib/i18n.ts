@@ -25,7 +25,9 @@ export const STR = {
         { k: 'Avg. band gain', v: '+1.0' },
         { k: 'Band 7+ achieved', v: '78%' },
         { k: 'Students taught', v: '1,200+' },
-      ]
+      ],
+      quote: '“I improved from 6.5 to 7.5 in just 6 weeks thanks to the templates and weekly feedback.”',
+      author: '— Student testimonial',
     },
     pricing: {
       title: 'Pricing',
@@ -34,21 +36,28 @@ export const STR = {
         { name: 'Starter', price: '$69/mo', note: 'Evenings 3x/week', features: ['All lessons', 'Class recordings', 'Homework feedback'] },
         { name: 'Pro (Popular)', price: '$119/mo', note: '4x/week + extras', features: ['Mock tests weekly', 'Speaking clubs', 'Printable workbooks'] },
         { name: 'Premium 1:1', price: '$19/hr', note: 'Personal coaching', features: ['Band 9 editing', 'Custom plan', 'Daily check-ins'] },
-      ]
+      ],
+      enroll: 'Enroll',
     },
     contact: {
       title: 'Contact us',
       subtitle: 'Book a free consultation or ask a question.',
       name: 'Full name',
       phone: 'Phone number',
-      email: 'Email',
+      email: 'Email (optional)',
       message: 'Your message',
+      namePh: 'e.g., Shavkat Malikov',
+      messagePh: 'Tell us your goals…',
       submit: 'Send message',
       sending: 'Sending…',
       success: "Thanks! We'll contact you soon.",
-      invalid: 'Please fill all fields correctly.'
+      invalid: 'Please fill in your name, phone and message correctly.',
+      error: 'Something went wrong. Please call us or try again later.',
+      findUs: 'Find us',
+      location: 'Uzbekistan',
     },
-    footer: { rights: 'All rights reserved.', address: 'Uzbekistan · IELTS Academy LC' }
+    footer: { rights: 'All rights reserved.', address: 'Uzbekistan · IELTS Academy LC', top: 'Top ↑' },
+    menu: 'Menu',
   },
   uz: {
     nav: { home: 'Bosh sahifa', programs: 'Kurslar', results: 'Natijalar', pricing: 'Narxlar', contact: 'Aloqa' },
@@ -76,7 +85,9 @@ export const STR = {
         { k: "O'rtacha band oshishi", v: '+1.0' },
         { k: 'Band 7+ ga erishgan', v: '78%' },
         { k: 'Ta\'lim olganlar', v: '1 200+' },
-      ]
+      ],
+      quote: "“Shablonlar va haftalik feedback tufayli atigi 6 haftada 6.5 dan 7.5 ga chiqdim.”",
+      author: "— O'quvchimiz fikri",
     },
     pricing: {
       title: 'Narxlar',
@@ -84,23 +95,31 @@ export const STR = {
       plans: [
         { name: 'Starter', price: '$69/oy', note: 'Kechqurun 3 marta/hafta', features: ['Barcha darslar', 'Yozib olishlar', 'Uyga vazifa feedbacki'] },
         { name: 'Pro (Ommabop)', price: '$119/oy', note: "4 marta/hafta + qo'shimcha", features: ['Haftalik mock testlar', 'Speaking klublari', 'Chop etiladigan workbooklar'] },
-        { name: 'Premium 1:1', price: '$19/soat', note: 'Shaxsiy coaching', features: ['Band 9 tahrir', 'Custom reja', 'Kundalik nazorat'] },
-      ]
+        { name: 'Premium 1:1', price: '$19/soat', note: 'Shaxsiy coaching', features: ['Band 9 tahrir', 'Shaxsiy reja', 'Kundalik nazorat'] },
+      ],
+      enroll: "Yozilish",
     },
     contact: {
       title: 'Aloqa',
       subtitle: 'Bepul maslahat oling yoki savolingizni yuboring.',
       name: "To'liq ism",
       phone: 'Telefon raqami',
-      email: 'Email',
+      email: 'Email (ixtiyoriy)',
       message: 'Xabaringiz',
+      namePh: 'Masalan, Shavkat Malikov',
+      messagePh: 'Maqsadingiz haqida yozing…',
       submit: 'Xabar yuborish',
       sending: 'Yuborilmoqda…',
       success: 'Rahmat! Tez orada bog\'lanamiz.',
-      invalid: 'Iltimos, maydonlarni to\'g\'ri to\'ldiring.'
+      invalid: "Iltimos, ism, telefon va xabarni to'g'ri kiriting.",
+      error: "Xatolik yuz berdi. Iltimos, qo'ng'iroq qiling yoki keyinroq urinib ko'ring.",
+      findUs: 'Bizning manzil',
+      location: "O'zbekiston",
     },
-    footer: { rights: 'Barcha huquqlar himoyalangan.', address: "O'zbekiston · IELTS Academy LC" }
+    footer: { rights: 'Barcha huquqlar himoyalangan.', address: "O'zbekiston · IELTS Academy LC", top: 'Yuqoriga ↑' },
+    menu: 'Menyu',
   }
 } as const;
 
 export type Lang = keyof typeof STR;
+export type Dict = (typeof STR)[Lang];

@@ -6,12 +6,27 @@ import Stat from '@/components/Stat'
 import Header from '@/components/Header'
 import ContactForm from '@/components/ContactForm'
 import { STR, type Lang } from '@/lib/i18n'
-import { useState } from 'react'
+import { SITE } from '@/lib/site'
+import { useEffect, useState } from 'react'
+import { Mail, Phone, Send } from 'lucide-react'
 
 export default function Page() {
-  const [lang, setLang] = useState<Lang>((typeof window !== 'undefined' && (localStorage.getItem('lang') as Lang)) || 'en')
+  const [lang, setLangState] = useState<Lang>('uz')
   const T = STR[lang]
-  if (typeof window !== 'undefined') localStorage.setItem('lang', lang)
+
+  // Saqlangan tilni faqat brauzerda, sahifa chizilgandan keyin o'qiymiz (hydration xatosi bo'lmasligi uchun)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('lang')
+      if (saved === 'en' || saved === 'uz') setLangState(saved)
+    } catch {}
+  }, [])
+  useEffect(() => { document.documentElement.lang = lang }, [lang])
+
+  function setLang(l: Lang) {
+    setLangState(l)
+    try { localStorage.setItem('lang', l) } catch {}
+  }
 
   return (
     <div>
@@ -26,7 +41,7 @@ export default function Page() {
               <a href="#pricing" className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 text-white font-semibold shadow-soft hover:bg-brand-800">{T.hero.cta1}</a>
               <a href="#contact" className="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">{T.hero.cta2}</a>
             </div>
-            <ul className="mt-6 grid grid-cols-3 gap-3 text-sm text-slate-600 dark:text-slate-300">
+            <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-600 dark:text-slate-300">
               <li className="flex items-center gap-2"><span>✔</span>{T.trust.a}</li>
               <li className="flex items-center gap-2"><span>✔</span>{T.trust.b}</li>
               <li className="flex items-center gap-2"><span>✔</span>{T.trust.c}</li>
@@ -35,7 +50,7 @@ export default function Page() {
           <div className="relative">
             <div className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-tr from-brand-200 via-gold-400/30 to-brand-500/30 blur-2xl"></div>
             <div className="rounded-3xl bg-white dark:bg-slate-900 p-4 shadow-soft border border-slate-100 dark:border-slate-800">
-              <img className="rounded-2xl w-full" alt="classroom" src="https://images.unsplash.com/photo-1610484826967-09c5720778dc?q=80&w=1200&auto=format&fit=crop" />
+              <img className="rounded-2xl w-full" alt="classroom" loading="eager" src="https://images.unsplash.com/photo-1610484826967-09c5720778dc?q=80&w=1200&auto=format&fit=crop" />
             </div>
           </div>
         </Container>
@@ -74,8 +89,8 @@ export default function Page() {
             {T.results.stats.map((s, i) => <Stat key={i} v={s.v} k={s.k} />)}
           </div>
           <div className="mt-10 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-800 p-8 text-white shadow-soft">
-            <p className="text-lg">“I improved from 6.5 to 7.5 in just 6 weeks thanks to the templates and weekly feedback.”</p>
-            <div className="mt-2 text-sm opacity-90">— Student testimonial</div>
+            <p className="text-lg">{T.results.quote}</p>
+            <div className="mt-2 text-sm opacity-90">{T.results.author}</div>
           </div>
         </Container>
       </Section>
@@ -96,7 +111,7 @@ export default function Page() {
                 <ul className="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-300">
                   {p.features.map((f: string, j: number) => <li key={j} className="flex gap-2"><span>✔</span>{f}</li>)}
                 </ul>
-                <a href="#contact" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-700 px-4 py-2 font-semibold text-white hover:bg-brand-800">Enroll</a>
+                <a href="#contact" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-700 px-4 py-2 font-semibold text-white hover:bg-brand-800">{T.pricing.enroll}</a>
               </div>
             ))}
           </div>
@@ -111,16 +126,16 @@ export default function Page() {
             <ContactForm labels={T.contact} />
           </div>
           <div className="rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-soft border border-slate-100 dark:border-slate-800">
-            <div className="text-sm text-slate-500 dark:text-slate-400">Find us</div>
-            <div className="mt-2 text-lg font-bold">IELTS Academy LC</div>
-            <div className="text-slate-600 dark:text-slate-300">Uzbekistan</div>
+            <div className="text-sm text-slate-500 dark:text-slate-400">{T.contact.findUs}</div>
+            <div className="mt-2 text-lg font-bold">{SITE.name}</div>
+            <div className="text-slate-600 dark:text-slate-300">{T.contact.location}</div>
             <div className="mt-4 h-64 w-full overflow-hidden rounded-xl">
-              <iframe title="map" className="h-full w-full" src="https://www.openstreetmap.org/export/embed.html?bbox=64.0%2C38.0%2C73.4%2C45.6&layer=mapnik" loading="lazy"></iframe>
+              <iframe title="map" className="h-full w-full" src={SITE.mapSrc} loading="lazy"></iframe>
             </div>
-            <div className="mt-4 space-y-1 text-sm">
-              <div className="flex items-center gap-2">info@ieltsacademy.uz</div>
-              <div className="flex items-center gap-2">+998 XX XXX XX XX</div>
-              <div className="flex items-center gap-2">@ieltsacademy</div>
+            <div className="mt-4 space-y-2 text-sm">
+              <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 hover:text-brand-700 dark:hover:text-brand-300"><Phone className="h-4 w-4" />{SITE.phone}</a>
+              <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-brand-700 dark:hover:text-brand-300"><Mail className="h-4 w-4" />{SITE.email}</a>
+              <a href={`https://t.me/${SITE.telegram}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-700 dark:hover:text-brand-300"><Send className="h-4 w-4" />@{SITE.telegram}</a>
             </div>
           </div>
         </Container>
@@ -129,11 +144,11 @@ export default function Page() {
       <footer className="border-t border-slate-200 dark:border-slate-800 py-10">
         <Container className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-slate-600 dark:text-slate-400">
-            © {new Date().getFullYear()} IELTS Academy LC — {T.footer.rights}
+            © {new Date().getFullYear()} {SITE.name} — {T.footer.rights}
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">{T.footer.address}</div>
           <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
-            <a href="#home" className="hover:text-brand-700 dark:hover:text-brand-300">Top ↑</a>
+            <a href="#home" className="hover:text-brand-700 dark:hover:text-brand-300">{T.footer.top}</a>
           </div>
         </Container>
       </footer>
