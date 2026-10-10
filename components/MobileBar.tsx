@@ -8,11 +8,15 @@ import type { Dict } from '@/lib/i18n'
 export default function MobileBar({ T }: { T: Dict }) {
   const [show, setShow] = useState(false)
   useEffect(() => {
-    const on = () => {
+    // Kadrga bir marta tekshiramiz (har bir scroll hodisasida emas)
+    let queued = false
+    const check = () => {
+      queued = false
       const c = document.getElementById('contact')?.getBoundingClientRect()
       const nearContact = c ? c.top < window.innerHeight && c.bottom > 0 : false
       setShow(window.scrollY > window.innerHeight * 0.8 && !nearContact)
     }
+    const on = () => { if (!queued) { queued = true; requestAnimationFrame(check) } }
     on(); window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
   }, [])

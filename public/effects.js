@@ -74,49 +74,74 @@
     });
   }
   scan();
-  new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+  // DOM o'zgarishlarini kadrga bir marta qayta ishlaymiz (har bir mutatsiyada emas)
+  var scanQueued = false;
+  new MutationObserver(function () {
+    if (scanQueued) return;
+    scanQueued = true;
+    requestAnimationFrame(function () { scanQueued = false; scan(); refresh(); });
+  }).observe(document.body, { childList: true, subtree: true });
 
   // ---- Scroll: progress, gorizontal harakat, tezlik ----
   var bar = document.createElement('div');
   bar.className = 'fx-progress';
   document.body.appendChild(bar);
-  var lastY = scrollY, vel = 0;
+  var lastY = scrollY, vel = 0, running = false, idle = 0;
+  var L = { sx: [], sk: [], vl: [], hs: [] };
+  function refresh() {
+    L.sx = [].slice.call(qa('[data-scroll-x]')).map(function (el) { return { el: el, k: parseFloat(el.getAttribute('data-scroll-x')) }; });
+    L.sk = [].slice.call(qa('[data-skew]'));
+    L.vl = [].slice.call(qa('[data-vline]'));
+    L.hs = [].slice.call(qa('[data-hscroll]')).map(function (sec) {
+      return { sec: sec, track: sec.querySelector('[data-hscroll-track]'), bar: sec.querySelector('[data-hscroll-bar]') };
+    });
+  }
+  refresh();
 
+  // Faqat scroll bo'layotganda ishlaydi; to'xtagach sikl o'chadi (telefonda batareya va tezlik uchun)
   function frame() {
-    var y = scrollY;
-    vel += ((y - lastY) - vel) * 0.15;
+    var y = scrollY, ih = innerHeight;
+    var dy = y - lastY;
+    vel += (dy - vel) * 0.15;
     lastY = y;
-    var h = root.scrollHeight - innerHeight;
-    bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+    // --- o'qish (layout) ---
+    var h = root.scrollHeight - ih;
+    var sx = [], vl = [], hs = [];
     if (!reduce) {
-      var skew = clamp(vel * 0.25, -12, 12);
-      qa('[data-scroll-x]').forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.bottom < -300 || r.top > innerHeight + 300) return;
-        var k = parseFloat(el.getAttribute('data-scroll-x'));
-        el.style.transform = 'translate3d(' + ((r.top - innerHeight / 2) * k) + 'px,0,0) skewX(' + (-skew) + 'deg)';
-      });
-      qa('[data-skew]').forEach(function (el) { el.style.transform = 'skewY(' + (skew * 0.15) + 'deg)'; });
-      qa('[data-vline]').forEach(function (el) {
-        var r = el.parentElement.getBoundingClientRect();
-        var p = clamp((innerHeight * 0.65 - r.top) / r.height, 0, 1);
-        el.style.transform = 'scaleY(' + p + ')';
-      });
-      qa('[data-hscroll]').forEach(function (sec) {
-        var track = sec.querySelector('[data-hscroll-track]');
-        var hb = sec.querySelector('[data-hscroll-bar]');
-        if (!track) return;
-        if (!wide.matches) { track.style.transform = ''; if (hb) hb.style.transform = ''; return; }
-        var r = sec.getBoundingClientRect();
-        var p = clamp(-r.top / (r.height - innerHeight), 0, 1);
-        var dist = track.scrollWidth - track.parentElement.clientWidth;
-        track.style.transform = 'translate3d(' + (-p * dist) + 'px,0,0)';
-        if (hb) hb.style.transform = 'scaleX(' + p + ')';
+      L.sx.forEach(function (o) { var r = o.el.getBoundingClientRect(); if (r.bottom > -300 && r.top < ih + 300) sx.push([o, r.top]); });
+      L.vl.forEach(function (el) { var r = el.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < ih) vl.push([el, r.top, r.height]); });
+      if (wide.matches) L.hs.forEach(function (o) {
+        if (!o.track) return;
+        var r = o.sec.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > ih) return;
+        hs.push([o, r.top, r.height, o.track.scrollWidth - o.track.parentElement.clientWidth]);
       });
     }
+    // --- yozish (transform) ---
+    bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+    if (!reduce) {
+      var skew = fine ? clamp(vel * 0.25, -12, 12) : 0;
+      sx.forEach(function (a) { a[0].el.style.transform = 'translate3d(' + ((a[1] - ih / 2) * a[0].k).toFixed(1) + 'px,0,0)' + (skew ? ' skewX(' + (-skew).toFixed(2) + 'deg)' : ''); });
+      if (fine) L.sk.forEach(function (el) { el.style.transform = Math.abs(skew) > 0.05 ? 'skewY(' + (skew * 0.15).toFixed(2) + 'deg)' : ''; });
+      vl.forEach(function (a) { a[0].style.transform = 'scaleY(' + clamp((ih * 0.65 - a[1]) / a[2], 0, 1).toFixed(3) + ')'; });
+      hs.forEach(function (a) {
+        var p = clamp(-a[1] / (a[2] - ih), 0, 1);
+        a[0].track.style.transform = 'translate3d(' + (-p * a[3]).toFixed(1) + 'px,0,0)';
+        if (a[0].bar) a[0].bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+      });
+    }
+    idle = (Math.abs(dy) < 0.5 && Math.abs(vel) < 0.05) ? idle + 1 : 0;
+    if (idle > 20) { running = false; return; }
     requestAnimationFrame(frame);
   }
-  requestAnimationFrame(frame);
+  function kick() { idle = 0; if (!running) { running = true; requestAnimationFrame(frame); } }
+  addEventListener('scroll', kick, { passive: true });
+  addEventListener('resize', kick);
+  wide.addEventListener && wide.addEventListener('change', function () {
+    L.hs.forEach(function (o) { if (o.track) o.track.style.transform = ''; if (o.bar) o.bar.style.transform = ''; });
+    kick();
+  });
+  kick();
 
   // ---- Konfetti ----
   window.__confetti = function (x, y) {
@@ -154,13 +179,14 @@
   addEventListener('touchstart', function (e) { var t = e.touches[0]; if (t) { pointer.x = t.clientX; pointer.y = t.clientY; lastMove = performance.now(); } }, { passive: true });
   qa('[data-particles]').forEach(function (cv) {
     if (reduce) return;
-    var g = cv.getContext('2d'), dpr = Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, pts = [], color = '#4b55f5', accent = '#ffd43b';
+    var lite = !fine || innerWidth < 1024;
+    var g = cv.getContext('2d'), dpr = lite ? 1 : Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, pts = [], color = '#4b55f5', accent = '#ffd43b';
     function size() {
       var r = cv.getBoundingClientRect();
       W = r.width; H = r.height;
       cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
       pts = [];
-      var gap = W < 640 ? 34 : 30;
+      var gap = lite ? 42 : 30;
       for (var y = gap / 2; y < H; y += gap) for (var x = gap / 2; x < W; x += gap) pts.push({ ox: x, oy: y, x: x, y: y, vx: 0, vy: 0 });
     }
     function colors() {
@@ -168,15 +194,19 @@
       color = cs.color; accent = cs.getPropertyValue('--accent').trim() || accent;
     }
     size(); colors();
-    addEventListener('resize', size);
+    // Telefonda manzil qatori yashirinib-chiqqanda ham 'resize' keladi — faqat kenglik o'zgarsa qayta quramiz
+    var lastW = innerWidth;
+    addEventListener('resize', function () { if (innerWidth !== lastW) { lastW = innerWidth; size(); } });
     new MutationObserver(colors).observe(root, { attributes: true, attributeFilter: ['class', 'data-theme'] });
     var visible = true;
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(cv);
-    var t = 0;
+    var t = 0, odd = false;
     (function draw() {
       requestAnimationFrame(draw);
-      if (!visible) return;
-      t += 0.012;
+      if (!visible || document.hidden) return;
+      // Telefonda 30 kadr/sek yetarli
+      if (lite) { odd = !odd; if (odd) return; }
+      t += lite ? 0.024 : 0.012;
       var r = cv.getBoundingClientRect(), mx = pointer.x - r.left, my = pointer.y - r.top, R = fine ? 140 : 110;
       // Sensorli ekranda, barmoq tegmaganda, "ko'rinmas kursor" maydon bo'ylab sekin aylanib yuradi
       if (!fine && performance.now() - lastMove > 1500) {

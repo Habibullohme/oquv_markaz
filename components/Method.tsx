@@ -18,7 +18,7 @@ export default function Method({ T }: { T: Dict['method'] }) {
           <div className="hidden lg:block text-sm font-semibold text-slate-400">{T.scroll}</div>
         </Container>
         <div className="relative mt-12 lg:mt-14 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
-          <ol data-hscroll-track className="relative grid gap-5 pl-12 pr-4 sm:pl-14 sm:pr-6 lg:flex lg:w-max lg:gap-6 lg:px-0 lg:pr-[10vw] will-change-transform">
+          <ol data-hscroll-track className="relative grid gap-5 pl-12 pr-4 sm:pl-14 sm:pr-6 lg:flex lg:w-max lg:gap-6 lg:px-0 lg:pr-[10vw] lg:will-change-transform">
             {/* Telefonda: scroll bilan to'ladigan vertikal chiziq */}
             <span className="absolute bottom-2 left-6 top-2 w-0.5 rounded-full bg-white/10 sm:left-8 lg:hidden" aria-hidden="true">
               <span data-vline className="block h-full w-full origin-top scale-y-0 rounded-full bg-gradient-to-b from-sun-400 to-brand-400" />

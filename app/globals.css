@@ -39,7 +39,7 @@ input[type=range].band { @apply w-full cursor-pointer accent-brand-600; }
 }
 
 /* ===== Animatsiyalar (public/effects.js) ===== */
-.fx [data-reveal] { opacity: 0; transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), filter .9s; will-change: transform, opacity; }
+.fx [data-reveal] { opacity: 0; transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), filter .9s; }
 .fx [data-reveal="up"], .fx [data-reveal=""] { transform: translateY(48px); }
 .fx [data-reveal="left"] { transform: translateX(-60px); }
 .fx [data-reveal="right"] { transform: translateX(60px); }
@@ -168,3 +168,18 @@ input[type=range].band:active::-webkit-slider-thumb { transform: scale(1.25); }
 .mnav .mnav-item { opacity: 0; transform: translateY(40px); transition: opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1); }
 .mnav[data-open] .mnav-item { opacity: 1; transform: none; transition-delay: calc(var(--i) * 60ms + 250ms); }
 @keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
+
+/* ===== Telefon va planshet: yengil rejim =====
+   Og'ir effektlar (blur ostidagi animatsiya, backdrop-filter, aylanuvchi nur) telefonda qotishga sabab bo'ladi */
+@media (hover: none), (max-width: 1023px) {
+  .glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  header.glass { background-color: rgb(247 247 251 / .97); }
+  .dark header.glass { background-color: rgb(6 7 26 / .97); }
+  .fx [data-reveal="zoom"] { filter: none; }
+  canvas[data-particles] { -webkit-mask-image: none; mask-image: none; }
+  .contact-orbs span { animation: none; filter: blur(40px); }
+  .glow-border::before { animation: none; }
+  .glow-border::after { display: none; }
+  .animate-float, .animate-ping { animation: none; }
+  [data-tilt], [data-magnetic], [data-parallax] { transition: none; }
+}
