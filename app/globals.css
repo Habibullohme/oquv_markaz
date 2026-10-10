@@ -163,10 +163,10 @@ input[type=range].band:active::-webkit-slider-thumb { transform: scale(1.25); }
 }
 
 /* To'liq ekranli menyu */
-.mnav { clip-path: circle(0% at calc(100% - 36px) 34px); transition: clip-path .7s cubic-bezier(.7,0,.2,1); }
-.mnav[data-open] { clip-path: circle(150% at calc(100% - 36px) 34px); }
-.mnav .mnav-item { opacity: 0; transform: translateY(40px); transition: opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1); }
-.mnav[data-open] .mnav-item { opacity: 1; transform: none; transition-delay: calc(var(--i) * 60ms + 250ms); }
+.mnav { overscroll-behavior: contain; transform: translate3d(0,-100%,0); visibility: hidden; transition: transform .5s cubic-bezier(.7,0,.2,1), visibility 0s linear .5s; }
+.mnav[data-open] { transform: none; visibility: visible; transition: transform .5s cubic-bezier(.7,0,.2,1), visibility 0s; }
+.mnav .mnav-item { opacity: 0; transform: translate3d(0,24px,0); transition: opacity .35s, transform .45s cubic-bezier(.2,.8,.2,1); }
+.mnav[data-open] .mnav-item { opacity: 1; transform: none; transition-delay: calc(var(--i) * 45ms + 200ms); }
 @keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
 
 /* ===== Telefon va planshet: yengil rejim =====
@@ -238,3 +238,15 @@ input[type=range].band:active::-webkit-slider-thumb { transform: scale(1.25); }
 @keyframes quiz-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 .quiz-shake { animation: shake .4s cubic-bezier(.3,0,.3,1); }
 @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+/* ===== Telefon: o'qituvchi kartalari chapdan "ochilib" chiqadi ===== */
+/* clip-path ichki qatlamda: kuzatilayotgan elementning o'zida bo'lsa IntersectionObserver uni ko'rmaydi */
+.fx [data-reveal="wipe"] { transform: translateX(-12px); transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .4s; }
+.fx [data-reveal="wipe"] .wipe-body { clip-path: inset(0 100% 0 0 round 24px); transition: clip-path .9s cubic-bezier(.7,0,.2,1); transition-delay: inherit; }
+.fx [data-reveal="wipe"][data-in] .wipe-body { clip-path: inset(0 0 0 0 round 24px); }
+.fx [data-reveal="wipe"] .t-ini { transform: scale(.4) rotate(-12deg); opacity: 0; transition: transform .7s cubic-bezier(.3,1.5,.5,1) .45s, opacity .3s .45s; }
+.fx [data-reveal="wipe"][data-in] .t-ini { transform: none; opacity: 1; }
+.fx [data-reveal="wipe"] .grow-bar { transition-delay: .6s; }
+@media (max-width: 767px) {
+  .fx [data-reveal="up"], .fx [data-reveal=""] { transform: translateY(28px) scale(.98); }
+  .fx [data-reveal="up"][data-from="top"]:not([data-in]) { transform: translateY(-28px) scale(.98); }
+}

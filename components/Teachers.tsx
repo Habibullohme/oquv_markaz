@@ -24,17 +24,48 @@ export default function Teachers({ T }: { T: Dict['teachers'] }) {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead eyebrow={T.eyebrow} title={T.title} subtitle={T.subtitle} />
           <div className="hidden lg:block text-sm font-semibold text-slate-500 dark:text-slate-400">{T.hint}</div>
-          <div className="lg:hidden inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/10 px-3 py-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400"><span className="inline-block animate-[nudge_1.6s_ease-in-out_infinite]">←</span>{T.swipe}<span className="inline-block animate-[nudge_1.6s_ease-in-out_infinite_reverse]">→</span></div>
         </div>
 
-        <div className="mt-12 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:h-[520px] lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:none]">
+        {/* Telefon va planshet: ixcham kartalar, chapdan "ochilib" chiqadi */}
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:hidden">
+          {T.items.map((t, i) => {
+            const dark = DARK_TEXT[i % 4]
+            const band = parseFloat(t.band)
+            return (
+              <article key={t.name} data-reveal="wipe" data-delay={String(i * 90)}>
+                <div className="wipe-body flex h-full overflow-hidden rounded-[24px] border border-slate-200 bg-white dark:border-white/10 dark:bg-ink-900">
+                <div className={`relative flex w-28 shrink-0 flex-col items-center justify-center gap-2 bg-gradient-to-br sm:w-32 ${TONES[i % 4]} ${dark ? 'text-ink-900' : 'text-white'}`}>
+                  <div className="grid-bg absolute inset-0 opacity-30" aria-hidden="true" />
+                  <span className="t-ini relative font-display text-3xl font-extrabold">{initials(t.name)}</span>
+                  <span className="relative rounded-lg bg-white/90 px-2 py-0.5 font-display text-[11px] font-extrabold text-ink-900">IELTS {t.band}</span>
+                </div>
+                <div className="min-w-0 flex-1 p-5">
+                  <h3 className="font-display text-lg font-bold leading-tight">{t.name}</h3>
+                  <div className="mt-1 text-sm font-semibold text-brand-600 dark:text-sun-400">{t.role}</div>
+                  <div className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t.exp}</div>
+                  {/* Band shkalasi: 9 dan qancha */}
+                  <div className="mt-3 flex items-center gap-2" aria-hidden="true">
+                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
+                      <div className="grow-bar h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 dark:from-sun-300 dark:to-sun-500" style={{ width: `${(band / 9) * 100}%` }} />
+                    </div>
+                    <span className="font-display text-xs font-extrabold tabular-nums">{t.band}/9</span>
+                  </div>
+                </div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        {/* Kompyuter: kengayib ochiladigan panellar */}
+        <div className="mt-12 hidden h-[520px] gap-4 lg:flex">
           {T.items.map((t, i) => {
             const open = active === i
             const dark = DARK_TEXT[i % 4]
             return (
               <article key={t.name} data-reveal="up" data-delay={String(i * 110)}
                 onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)} tabIndex={0}
-                className={`tgrow group relative min-h-[420px] w-[78%] shrink-0 snap-start overflow-hidden rounded-[28px] bg-gradient-to-br ${TONES[i % 4]} ${dark ? 'text-ink-900' : 'text-white'} sm:w-[46%] lg:min-h-0 lg:w-auto lg:min-w-0 lg:basis-0 lg:shrink lg:transition-[flex-grow] lg:duration-700 lg:ease-[cubic-bezier(.7,0,.2,1)] ${open ? 'lg:grow-[3.4]' : 'lg:grow'}`}>
+                className={`tgrow group relative min-w-0 basis-0 overflow-hidden rounded-[28px] bg-gradient-to-br ${TONES[i % 4]} ${dark ? 'text-ink-900' : 'text-white'} ${open ? 'lg:grow-[3.4]' : 'lg:grow'}`}>
                 {/* Katta bosh harflar fonda */}
                 <span aria-hidden="true" className={`pointer-events-none absolute -bottom-10 -right-6 font-display text-[11rem] font-extrabold leading-none opacity-20 transition-transform duration-700 ${open ? 'lg:scale-100 lg:rotate-0' : 'lg:scale-75 lg:-rotate-12'}`}>{initials(t.name)}</span>
                 <div className="grid-bg absolute inset-0 opacity-30" aria-hidden="true" />

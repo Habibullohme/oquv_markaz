@@ -24,11 +24,13 @@ export default function Header({ lang, setLang, labels }: { lang: Lang, setLang:
   // Menyu ochiq bo'lsa sahifa scroll bo'lmaydi; Esc bilan yopiladi
   useEffect(() => {
     const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis
-    document.documentElement.style.overflow = open ? 'hidden' : ''
-    if (open) lenis?.stop(); else lenis?.start()
+    // Scroll'ni bloklash (va Lenis.stop) butun sahifani qayta hisoblatadi — shuning uchun menyu animatsiyasi tugagach qilamiz
+    let t: ReturnType<typeof setTimeout> | undefined
+    if (open) t = setTimeout(() => { lenis?.stop(); document.documentElement.style.overflow = 'hidden' }, 550)
+    else { document.documentElement.style.overflow = ''; lenis?.start() }
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => { window.removeEventListener('keydown', onKey); if (t) clearTimeout(t) }
   }, [open])
 
   const btn = 'flex h-10 items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-white/5 transition'
@@ -53,8 +55,8 @@ export default function Header({ lang, setLang, labels }: { lang: Lang, setLang:
 
       {/* To'liq ekranli telefon menyusi (header'dan tashqarida: header'ning blur effekti fixed elementni buzmasligi uchun) */}
       <div id="mnav" className="mnav fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-ink-950 text-white xl:hidden" data-open={open ? '' : undefined} aria-hidden={!open} {...({ inert: open ? undefined : '' } as object)}>
-        <div className="absolute inset-0 grid-bg opacity-50" aria-hidden="true" />
-        <div className="absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-brand-600/40 blur-3xl" aria-hidden="true" />
+        {/* Yengil fon: blur va to'r yo'q (telefonda menyu tez ochilishi uchun) */}
+        <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_100%_30%,rgba(50,56,230,.35),transparent)]" aria-hidden="true" />
         <Container className="relative flex w-full items-center justify-between py-3">
           <span className="font-display text-sm font-bold text-slate-400">{labels.menu}</span>
           <button onClick={() => setOpen(false)} aria-label="Close" className="flex h-11 items-center gap-2 rounded-full bg-sun-400 pl-4 pr-3 text-sm font-bold text-ink-900">

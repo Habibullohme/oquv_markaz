@@ -15,7 +15,7 @@ export default function Courses({ T }: { T: Dict['courses'] }) {
           {T.items.map((c, i) => {
             const featured = i === 0
             return (
-              <article key={c.title} data-reveal="up" style={{ top: `calc(90px + ${i * 28}px)` }} className={`group sticky grid gap-6 rounded-[32px] p-7 md:grid-cols-[1fr_1.2fr] md:gap-12 md:p-12 shadow-lift ${featured ? 'bg-brand-700 text-white' : ['bg-white dark:bg-ink-900 border border-slate-200 dark:border-white/10', 'bg-sun-400 text-ink-900', 'bg-ink-900 dark:bg-brand-950 text-white'][(i - 1) % 3]}`}>
+              <article key={c.title} data-reveal="up" style={{ top: `calc(90px + ${i * 28}px)` }} className={`group grid gap-6 rounded-[32px] p-6 sm:p-7 md:sticky md:grid-cols-[1fr_1.2fr] md:gap-12 md:p-12 shadow-lift ${featured ? 'bg-brand-700 text-white' : ['bg-white dark:bg-ink-900 border border-slate-200 dark:border-white/10', 'bg-sun-400 text-ink-900', 'bg-ink-900 dark:bg-brand-950 text-white'][(i - 1) % 3]}`}>
                 <div className="flex flex-col">
                 <div className="flex items-center justify-between gap-3">
                   <span className="rounded-full chip px-3 py-1 text-xs font-bold ">{c.tag}</span>

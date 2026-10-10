@@ -7,18 +7,7 @@ import Roll from './Roll'
 import { cefrFor } from './BandCalculator'
 import { fill, prefillContact } from '@/lib/prefill'
 import type { Dict } from '@/lib/i18n'
-
-// Savollar osondan (A2) qiyinga (C1). Javob indeksi: a
-const QUESTIONS = [
-  { q: 'She ___ to school every day.', o: ['go', 'goes', 'going', 'gone'], a: 1, lvl: 'A2' },
-  { q: 'I have lived here ___ 2019.', o: ['for', 'since', 'from', 'at'], a: 1, lvl: 'A2' },
-  { q: 'If it rains tomorrow, we ___ at home.', o: ['stay', 'will stay', 'would stay', 'stayed'], a: 1, lvl: 'B1' },
-  { q: 'This book ___ by millions of people.', o: ['has read', 'has been read', 'is reading', 'reads'], a: 1, lvl: 'B1' },
-  { q: 'I wish I ___ more time to study last year.', o: ['have', 'had', 'had had', 'would have'], a: 2, lvl: 'B2' },
-  { q: 'Hardly ___ the room when the phone rang.', o: ['I had entered', 'had I entered', 'I entered', 'did I enter'], a: 1, lvl: 'B2' },
-  { q: 'The closest meaning of “meticulous” is…', o: ['careless', 'very careful and precise', 'extremely fast', 'generous'], a: 1, lvl: 'C1' },
-  { q: 'The proposal was met with widespread ___.', o: ['criticism', 'critic', 'critical', 'criticise'], a: 0, lvl: 'C1' },
-]
+import { firstSet, randomSet, type Question } from '@/lib/quiz-bank'
 
 // To'g'ri javoblar soni → taxminiy IELTS band va tavsiya etilgan kurs (kurslar ro'yxatidagi indeks)
 const RESULT = [
@@ -33,6 +22,7 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
   const [step, setStep] = useState(-1)               // -1: boshlanish, 0..7: savol, 8: natija
   const [picked, setPicked] = useState<number | null>(null)
   const [score, setScore] = useState(0)
+  const [QUESTIONS, setQuestions] = useState<Question[]>(firstSet)
 
   const q = QUESTIONS[step]
   const done = step >= QUESTIONS.length
@@ -45,7 +35,8 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
     if (i === q.a) setScore(s => s + 1)
   }
   function next() { setPicked(null); setStep(s => s + 1) }
-  function restart() { setPicked(null); setScore(0); setStep(0) }
+  // Har safar boshlanganda yangi savollar to'plami (qayta topshirganda oldingisidan farqli)
+  function begin() { setQuestions(prev => randomSet(prev)); setPicked(null); setScore(0); setStep(0) }
   function send() {
     prefillContact(fill(T.prefill, { level, band: res.range, score, course: courses[res.course].title }))
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
@@ -77,7 +68,7 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
                   <span className="absolute inset-0 rounded-full border-2 border-dashed border-brand-300 dark:border-white/20 animate-[spin_20s_linear_infinite]" aria-hidden="true" />
                   <span className="font-display text-3xl font-extrabold text-brand-700 dark:text-sun-400">A→C</span>
                 </div>
-                <button type="button" onClick={() => setStep(0)} data-magnetic className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-brand-600 px-7 py-4 font-bold text-white hover:bg-brand-700 dark:bg-sun-400 dark:text-ink-900 dark:hover:bg-sun-300">
+                <button type="button" onClick={begin} data-magnetic className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-brand-600 px-7 py-4 font-bold text-white hover:bg-brand-700 dark:bg-sun-400 dark:text-ink-900 dark:hover:bg-sun-300">
                   <Roll text={T.start} /><ArrowRight className="h-5 w-5" />
                 </button>
               </div>
@@ -95,7 +86,7 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
                     const isAns = picked !== null && i === q.a
                     const isWrong = picked === i && i !== q.a
                     return (
-                      <button key={o} type="button" onClick={() => choose(i)} disabled={picked !== null}
+                      <button key={`${step}-${o}`} type="button" onClick={() => choose(i)} disabled={picked !== null}
                         className={`flex items-center justify-between gap-3 rounded-2xl border-2 px-5 py-4 text-left font-semibold transition duration-300 ${isAns ? 'border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300' : isWrong ? 'quiz-shake border-rose-500 bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300' : 'border-slate-200 hover:border-brand-400 hover:bg-brand-50/50 dark:border-white/10 dark:hover:border-sun-400/60 dark:hover:bg-white/5'} ${picked !== null && !isAns && !isWrong ? 'opacity-50' : ''}`}>
                         <span><span className="mr-3 font-display text-xs font-extrabold opacity-50">{'ABCD'[i]}</span>{o}</span>
                         {isAns && <Check className="h-5 w-5 shrink-0" />}
@@ -143,7 +134,7 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
                   <button type="button" onClick={send} data-magnetic className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white hover:bg-brand-700 dark:bg-sun-400 dark:text-ink-900 sm:flex-none">
                     <span>{T.cta}</span><ArrowRight className="h-5 w-5 shrink-0" />
                   </button>
-                  <button type="button" onClick={restart} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-5 py-4 font-bold dark:border-white/15">
+                  <button type="button" onClick={begin} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-5 py-4 font-bold dark:border-white/15">
                     <RotateCcw className="h-4 w-4" />{T.retry}
                   </button>
                 </div>
