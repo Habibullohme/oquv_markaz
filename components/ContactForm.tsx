@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { PREFILL_EVENT } from '@/lib/prefill'
 import { ArrowRight, Check } from 'lucide-react'
 import Roll from './Roll'
 import type { Dict } from '@/lib/i18n'
@@ -23,6 +24,21 @@ export default function ContactForm({ labels }: { labels: Dict['contact'] }) {
   const [form, setForm] = useState(EMPTY)
   const [sending, setSending] = useState(false)
   const [status, setStatus] = useState<{ ok: boolean, text: string } | null>(null)
+  const [flash, setFlash] = useState(false)
+  const nameRef = useRef<HTMLDivElement>(null)
+
+  // Kalkulyator yoki daraja testidan kelgan matn "Xabar" maydoniga yoziladi
+  useEffect(() => {
+    const on = (e: Event) => {
+      const msg = (e as CustomEvent<string>).detail
+      setForm(f => ({ ...f, message: msg }))
+      setFlash(true)
+      setTimeout(() => setFlash(false), 1600)
+      setTimeout(() => nameRef.current?.querySelector('input')?.focus({ preventScroll: true }), 900)
+    }
+    window.addEventListener(PREFILL_EVENT, on)
+    return () => window.removeEventListener(PREFILL_EVENT, on)
+  }, [])
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -53,12 +69,12 @@ export default function ContactForm({ labels }: { labels: Dict['contact'] }) {
     <form className="relative space-y-4" onSubmit={submit} noValidate>
       {/* Botlar uchun tuzoq — odamlarga ko'rinmaydi */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" value={form.website} onChange={set('website')} />
-      <Field id="cf-name" label={labels.name} required maxLength={100} autoComplete="name" value={form.name} onChange={set('name')} />
+      <div ref={nameRef}><Field id="cf-name" label={labels.name} required maxLength={100} autoComplete="name" value={form.name} onChange={set('name')} /></div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Field id="cf-phone" label={labels.phone} type="tel" required maxLength={30} autoComplete="tel" inputMode="tel" value={form.phone} onChange={set('phone')} />
         <Field id="cf-email" label={labels.email} type="email" maxLength={120} autoComplete="email" value={form.email} onChange={set('email')} />
       </div>
-      <Field id="cf-message" label={labels.message} textarea required maxLength={2000} value={form.message} onChange={set('message')} />
+      <div className={`rounded-2xl transition-shadow duration-500 ${flash ? 'ring-4 ring-sun-400/70' : ''}`}><Field id="cf-message" label={labels.message} textarea required maxLength={2000} value={form.message} onChange={set('message')} /></div>
       <button disabled={sending} data-magnetic className="group flex w-full items-center justify-between gap-3 rounded-2xl bg-brand-600 py-2 pl-6 pr-2 font-bold text-white transition hover:bg-brand-700 disabled:opacity-60 dark:bg-sun-400 dark:text-ink-900 dark:hover:bg-sun-300">
         <Roll text={sending ? labels.sending : labels.submit} />
         <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 dark:bg-ink-900/10 transition duration-500 group-hover:rotate-[-45deg]"><ArrowRight className="h-5 w-5" /></span>

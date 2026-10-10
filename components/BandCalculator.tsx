@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import type { Dict } from '@/lib/i18n'
+import { fill, prefillContact } from '@/lib/prefill'
 
 type Skill = 'L' | 'R' | 'W' | 'S'
 const SKILLS: Skill[] = ['L', 'R', 'W', 'S']
@@ -19,7 +20,7 @@ export function cefrFor(band: number) {
   return 'A2'
 }
 
-export default function BandCalculator({ labels }: { labels: Dict['calc'] }) {
+export default function BandCalculator({ labels, prefill }: { labels: Dict['calc'], prefill: string }) {
   const [s, setS] = useState<Record<Skill, number>>({ L: 7, R: 6.5, W: 6, S: 6.5 })
   const overall = overallBand(SKILLS.map(k => s[k]))
   const R = 52, C = 2 * Math.PI * R
@@ -63,7 +64,7 @@ export default function BandCalculator({ labels }: { labels: Dict['calc'] }) {
         <div className="text-sm text-slate-600 dark:text-slate-300">{labels.cefr}</div>
         <div className="font-display text-xl font-extrabold text-brand-700 dark:text-sun-400">{cefrFor(overall)}</div>
       </div>
-      <a href="#contact" className="mt-4 flex w-full items-center justify-center rounded-2xl bg-ink-900 dark:bg-sun-400 px-4 py-3 text-sm font-bold text-white dark:text-ink-900 hover:bg-brand-700 dark:hover:bg-sun-300 transition">
+      <a href="#contact" onClick={() => prefillContact(fill(prefill, { band: overall.toFixed(1), cefr: cefrFor(overall) }))} className="mt-4 flex w-full items-center justify-center rounded-2xl bg-ink-900 dark:bg-sun-400 px-4 py-3 text-sm font-bold text-white dark:text-ink-900 hover:bg-brand-700 dark:hover:bg-sun-300 transition">
         {labels.cta} →
       </a>
     </div>

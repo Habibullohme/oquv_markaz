@@ -12,9 +12,12 @@ export default function MobileBar({ T }: { T: Dict }) {
     let queued = false
     const check = () => {
       queued = false
-      const c = document.getElementById('contact')?.getBoundingClientRect()
-      const nearContact = c ? c.top < window.innerHeight && c.bottom > 0 : false
-      setShow(window.scrollY > window.innerHeight * 0.8 && !nearContact)
+      // Aloqa bo'limi yoki daraja testi ekranda bo'lsa yashirinadi (tugmalarni to'smasligi uchun)
+      const inView = (id: string) => {
+        const r = document.getElementById(id)?.getBoundingClientRect()
+        return r ? r.top < window.innerHeight * 0.85 && r.bottom > window.innerHeight * 0.3 : false
+      }
+      setShow(window.scrollY > window.innerHeight * 0.8 && !inView('contact') && !inView('test'))
     }
     const on = () => { if (!queued) { queued = true; requestAnimationFrame(check) } }
     on(); window.addEventListener('scroll', on, { passive: true })

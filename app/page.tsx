@@ -6,6 +6,8 @@ import Ticker from '@/components/Ticker'
 import Stats from '@/components/Stats'
 import BigText from '@/components/BigText'
 import Features from '@/components/Features'
+import Quiz from '@/components/Quiz'
+import ToTop from '@/components/ToTop'
 import Courses from '@/components/Courses'
 import Method from '@/components/Method'
 import Teachers from '@/components/Teachers'
@@ -47,6 +49,7 @@ export default function Page() {
         <BigText />
         <Courses T={T.courses} />
         <Method T={T.method} />
+        <Quiz T={T.quiz} courses={T.courses.items} />
         <Teachers T={T.teachers} />
         <Results T={T.results} />
         <Pricing T={T.pricing} />
@@ -56,6 +59,7 @@ export default function Page() {
       <Footer T={T} />
       <TelegramFab label={T.telegram} />
       <MobileBar T={T} />
+      <ToTop label={T.toTop} />
     </>
   )
 }

@@ -233,3 +233,8 @@ input[type=range].band:active::-webkit-slider-thumb { transform: scale(1.25); }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 @keyframes dash { to { stroke-dashoffset: -140; } }
 .fx [data-reveal]:not([data-in]) .orbit, .fx [data-reveal]:not([data-in]) .dash-spin { animation-play-state: paused; }
+/* ===== Daraja testi ===== */
+.quiz-in { animation: quiz-in .5s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes quiz-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+.quiz-shake { animation: shake .4s cubic-bezier(.3,0,.3,1); }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }

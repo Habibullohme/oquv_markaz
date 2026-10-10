@@ -1,5 +1,12 @@
 // Markaz haqidagi ma'lumotlar — shu yerda o'zgartiring
+// Sayt manzili: hostingda NEXT_PUBLIC_SITE_URL ni o'rnating (Vercel'da avtomatik aniqlanadi)
+const url = process.env.NEXT_PUBLIC_SITE_URL
+  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '')
+  || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '')
+  || 'http://localhost:3000'
+
 export const SITE = {
+  url,
   name: 'IELTS Academy LC',
   phone: '+998 XX XXX XX XX',
   email: 'info@ieltsacademy.uz',

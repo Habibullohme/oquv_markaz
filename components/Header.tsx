@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { ArrowUpRight, Menu, Moon, Phone, Send, Sun, X } from 'lucide-react'
 import type { Lang, Dict } from '@/lib/i18n'
 
-const KEYS = ['why', 'courses', 'method', 'teachers', 'results', 'pricing', 'faq'] as const
+const KEYS = ['why', 'courses', 'test', 'teachers', 'results', 'pricing', 'faq'] as const
 
 type LenisLike = { stop: () => void, start: () => void }
 

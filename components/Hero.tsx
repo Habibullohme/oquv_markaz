@@ -85,7 +85,7 @@ export default function Hero({ T }: { T: Dict }) {
             </div>
           </div>
           <div data-tilt className="relative rounded-[28px]">
-            <BandCalculator labels={T.calc} />
+            <BandCalculator labels={T.calc} prefill={T.quiz.calcPrefill} />
           </div>
         </div>
       </Container>

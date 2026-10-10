@@ -1,12 +1,36 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import { SITE } from '@/lib/site'
 import Script from 'next/script'
 import { themeInitScript } from '@/lib/theme'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: "IELTS Academy LC — IELTS 7+ va CEFR kurslari",
+  keywords: ['IELTS', 'CEFR', 'IELTS Toshkent', 'IELTS kurslari', "ingliz tili o'quv markazi", 'IELTS 7', 'mock test'],
+  openGraph: { type: 'website', locale: 'uz_UZ', siteName: SITE.name, title: 'IELTS Academy LC — IELTS 7.0+', description: "Band 9 shablonlari, haftalik mock testlar va speaking klub. Bepul sinov darsiga yoziling." },
+  twitter: { card: 'summary_large_image' },
+  alternates: { canonical: '/' },
   description: "IELTS va CEFR kurslari: Band 9 shablonlari, haftalik mock testlar va ikki tilli (o'zbek + ingliz) ta'lim.",
   icons: [{ rel: 'icon', url: 'data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><text y=\"50%\" x=\"50%\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-size=\"140\">🎓</text></svg>' }],
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f7f7fb' },
+    { media: '(prefers-color-scheme: dark)', color: '#06071a' },
+  ],
+}
+
+// Google uchun tuzilgan ma'lumot (o'quv markazi haqida)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: SITE.name,
+  url: SITE.url,
+  email: SITE.email,
+  address: { '@type': 'PostalAddress', addressLocality: 'Tashkent', addressCountry: 'UZ' },
+  sameAs: [`https://t.me/${SITE.telegram}`, `https://instagram.com/${SITE.instagram}`],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="uz" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
