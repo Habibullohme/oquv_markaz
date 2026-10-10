@@ -24,6 +24,7 @@ export default function Teachers({ T }: { T: Dict['teachers'] }) {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead eyebrow={T.eyebrow} title={T.title} subtitle={T.subtitle} />
           <div className="hidden lg:block text-sm font-semibold text-slate-500 dark:text-slate-400">{T.hint}</div>
+          <div className="lg:hidden inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/10 px-3 py-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400"><span className="inline-block animate-[nudge_1.6s_ease-in-out_infinite]">←</span>{T.swipe}<span className="inline-block animate-[nudge_1.6s_ease-in-out_infinite_reverse]">→</span></div>
         </div>
 
         <div className="mt-12 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:h-[520px] lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:none]">

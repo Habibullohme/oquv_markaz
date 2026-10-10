@@ -44,6 +44,7 @@ input[type=range].band { @apply w-full cursor-pointer accent-brand-600; }
 .fx [data-reveal="left"] { transform: translateX(-60px); }
 .fx [data-reveal="right"] { transform: translateX(60px); }
 .fx [data-reveal="zoom"] { transform: scale(.88); filter: blur(6px); }
+.fx [data-reveal="up"][data-from="top"]:not([data-in]), .fx [data-reveal=""][data-from="top"]:not([data-in]) { transform: translateY(-48px); }
 .fx [data-reveal][data-in] { opacity: 1; transform: none; filter: none; }
 
 /* Sarlavha so'zlari birma-bir ko'tarilib chiqadi */
@@ -139,3 +140,31 @@ main, footer { overflow-x: clip; }
 .wm-ch { transition: color .3s; }
 .wm-ch .ch { transition: transform .9s cubic-bezier(.2,.8,.2,1), color .3s; }
 [data-in] .wm-ch:hover .ch { transform: translateY(-14%) skewX(-8deg); color: theme('colors.sun.400'); transition-delay: 0s; }
+
+/* ===== Telefon ===== */
+/* Kalkulyator slayderlari barmoq uchun kattaroq */
+input[type=range].band { -webkit-appearance: none; appearance: none; height: 28px; background: transparent; }
+input[type=range].band::-webkit-slider-runnable-track { height: 8px; border-radius: 9999px; background: linear-gradient(to right, theme('colors.brand.600') var(--p, 50%), theme('colors.brand.100') var(--p, 50%)); }
+input[type=range].band::-moz-range-track { height: 8px; border-radius: 9999px; background: theme('colors.brand.100'); }
+input[type=range].band::-moz-range-progress { height: 8px; border-radius: 9999px; background: theme('colors.brand.600'); }
+input[type=range].band::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -8px; border-radius: 9999px; background: #fff; border: 5px solid theme('colors.brand.600'); box-shadow: 0 4px 12px rgba(18,20,71,.25); transition: transform .2s; }
+input[type=range].band::-moz-range-thumb { width: 14px; height: 14px; border-radius: 9999px; background: #fff; border: 5px solid theme('colors.brand.600'); }
+input[type=range].band:active::-webkit-slider-thumb { transform: scale(1.25); }
+.dark input[type=range].band::-webkit-slider-runnable-track { background: linear-gradient(to right, theme('colors.sun.400') var(--p, 50%), rgba(255,255,255,.12) var(--p, 50%)); }
+.dark input[type=range].band::-moz-range-track { background: rgba(255,255,255,.12); }
+.dark input[type=range].band::-moz-range-progress { background: theme('colors.sun.400'); }
+.dark input[type=range].band::-webkit-slider-thumb { border-color: theme('colors.sun.400'); background: theme('colors.ink.900'); }
+.dark input[type=range].band::-moz-range-thumb { border-color: theme('colors.sun.400'); background: theme('colors.ink.900'); }
+
+/* Sensorli ekranda bosilganda tugma ozgina "botadi" */
+@media (hover: none) {
+  html { -webkit-tap-highlight-color: transparent; }
+  a:active, button:active { transform: scale(.97); transition: transform .15s; }
+}
+
+/* To'liq ekranli menyu */
+.mnav { clip-path: circle(0% at calc(100% - 36px) 34px); transition: clip-path .7s cubic-bezier(.7,0,.2,1); }
+.mnav[data-open] { clip-path: circle(150% at calc(100% - 36px) 34px); }
+.mnav .mnav-item { opacity: 0; transform: translateY(40px); transition: opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1); }
+.mnav[data-open] .mnav-item { opacity: 1; transform: none; transition-delay: calc(var(--i) * 60ms + 250ms); }
+@keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }

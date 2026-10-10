@@ -53,7 +53,8 @@ export default function BandCalculator({ labels }: { labels: Dict['calc'] }) {
               <span className="rounded-md bg-brand-50 dark:bg-white/10 px-2 py-0.5 font-display text-xs font-bold tabular-nums text-brand-700 dark:text-sun-400">{s[k].toFixed(1)}</span>
             </div>
             <input id={`band-${k}`} type="range" min={3} max={9} step={0.5} value={s[k]}
-              onChange={e => setS({ ...s, [k]: Number(e.target.value) })} className="band mt-1.5" />
+              onChange={e => setS({ ...s, [k]: Number(e.target.value) })} className="band mt-1"
+              style={{ ['--p' as string]: `${((s[k] - 3) / 6) * 100}%` }} />
           </div>
         ))}
       </div>

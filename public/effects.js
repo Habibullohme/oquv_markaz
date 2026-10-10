@@ -51,11 +51,19 @@
   if (window.Lenis) initLenis(); else addEventListener('load', initLenis);
 
   // ---- Scroll qilganda chiqib kelish ----
+  // Har safar ekranga kirganda qayta o'ynaydi. Ekrandan to'liq chiqqanda holat tiklanadi:
+  // yuqoridan chiqib ketgan element keyin yuqoridan, pastdan chiqqani pastdan kirib keladi.
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
     es.forEach(function (e) {
-      if (e.isIntersecting) { e.target.setAttribute('data-in', ''); io.unobserve(e.target); }
+      var el = e.target;
+      if (e.isIntersecting && e.intersectionRatio >= 0.1) {
+        el.setAttribute('data-in', '');
+      } else if (!e.isIntersecting) {
+        el.removeAttribute('data-in');
+        el.setAttribute('data-from', e.boundingClientRect.top < 0 ? 'top' : 'bottom');
+      }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
+  }, { threshold: [0, 0.1], rootMargin: '0px 0px -30px 0px' }) : null;
 
   function scan() {
     qa('[data-reveal]:not([data-fx])').forEach(function (el) {
@@ -89,6 +97,11 @@
         el.style.transform = 'translate3d(' + ((r.top - innerHeight / 2) * k) + 'px,0,0) skewX(' + (-skew) + 'deg)';
       });
       qa('[data-skew]').forEach(function (el) { el.style.transform = 'skewY(' + (skew * 0.15) + 'deg)'; });
+      qa('[data-vline]').forEach(function (el) {
+        var r = el.parentElement.getBoundingClientRect();
+        var p = clamp((innerHeight * 0.65 - r.top) / r.height, 0, 1);
+        el.style.transform = 'scaleY(' + p + ')';
+      });
       qa('[data-hscroll]').forEach(function (sec) {
         var track = sec.querySelector('[data-hscroll-track]');
         var hb = sec.querySelector('[data-hscroll-bar]');
@@ -135,8 +148,10 @@
   };
 
   // ---- Nuqtalar maydoni (hero fon) ----
-  var pointer = { x: -9999, y: -9999 };
-  addEventListener('pointermove', function (e) { pointer.x = e.clientX; pointer.y = e.clientY; }, { passive: true });
+  var pointer = { x: -9999, y: -9999 }, lastMove = 0;
+  addEventListener('pointermove', function (e) { pointer.x = e.clientX; pointer.y = e.clientY; lastMove = performance.now(); }, { passive: true });
+  addEventListener('touchmove', function (e) { var t = e.touches[0]; if (t) { pointer.x = t.clientX; pointer.y = t.clientY; lastMove = performance.now(); } }, { passive: true });
+  addEventListener('touchstart', function (e) { var t = e.touches[0]; if (t) { pointer.x = t.clientX; pointer.y = t.clientY; lastMove = performance.now(); } }, { passive: true });
   qa('[data-particles]').forEach(function (cv) {
     if (reduce) return;
     var g = cv.getContext('2d'), dpr = Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, pts = [], color = '#4b55f5', accent = '#ffd43b';
@@ -162,7 +177,11 @@
       requestAnimationFrame(draw);
       if (!visible) return;
       t += 0.012;
-      var r = cv.getBoundingClientRect(), mx = pointer.x - r.left, my = pointer.y - r.top, R = 140;
+      var r = cv.getBoundingClientRect(), mx = pointer.x - r.left, my = pointer.y - r.top, R = fine ? 140 : 110;
+      // Sensorli ekranda, barmoq tegmaganda, "ko'rinmas kursor" maydon bo'ylab sekin aylanib yuradi
+      if (!fine && performance.now() - lastMove > 1500) {
+        mx = W * (0.5 + 0.38 * Math.sin(t * 0.9)); my = H * (0.42 + 0.3 * Math.sin(t * 1.7));
+      }
       g.clearRect(0, 0, W, H);
       for (var i = 0; i < pts.length; i++) {
         var p = pts[i];

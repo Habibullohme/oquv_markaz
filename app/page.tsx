@@ -14,6 +14,7 @@ import Faq from '@/components/Faq'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import TelegramFab from '@/components/TelegramFab'
+import MobileBar from '@/components/MobileBar'
 import { STR, type Lang } from '@/lib/i18n'
 
 export default function Page() {
@@ -52,6 +53,7 @@ export default function Page() {
       </main>
       <Footer T={T} />
       <TelegramFab label={T.telegram} />
+      <MobileBar T={T} />
     </>
   )
 }

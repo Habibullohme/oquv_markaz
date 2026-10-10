@@ -58,6 +58,7 @@ export const STR = {
     teachers: {
       eyebrow: "O'qituvchilar",
       hint: "Sichqonchani olib boring — kartochka ochiladi",
+      swipe: "Yon tomonga suring",
       title: 'Sertifikatlangan mutaxassislar',
       subtitle: "Har bir o'qituvchimiz IELTS'dan kamida 8.0 olgan va CELTA yoki TESOL sertifikatiga ega.",
       // NAMUNA — haqiqiy o'qituvchilar bilan almashtiring
@@ -134,6 +135,8 @@ export const STR = {
     },
     footer: { rights: 'Barcha huquqlar himoyalangan.', top: 'Yuqoriga ↑', tagline: 'IELTS va CEFR imtihonlariga sifatli tayyorlov.' },
     telegram: 'Telegramda yozish',
+    mobileCta: 'Bepul sinov darsi',
+    call: "Qo'ng'iroq qilish",
   },
   en: {
     menu: 'Menu',
@@ -189,6 +192,7 @@ export const STR = {
     teachers: {
       eyebrow: 'Teachers',
       hint: 'Hover over a card to open it',
+      swipe: 'Swipe sideways',
       title: 'Certified specialists',
       subtitle: 'Every teacher holds IELTS 8.0 or higher and a CELTA or TESOL certificate.',
       items: [
@@ -262,6 +266,8 @@ export const STR = {
     },
     footer: { rights: 'All rights reserved.', top: 'Top ↑', tagline: 'Quality preparation for IELTS and CEFR exams.' },
     telegram: 'Message us on Telegram',
+    mobileCta: 'Free trial lesson',
+    call: 'Call us',
   },
 } as const;
 

@@ -10,9 +10,11 @@ function Counter({ value, decimals, prefix, suffix }: { value: number, decimals:
     const el = ref.current
     if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let raf = 0
+    // Har safar ekranga kirganda 0 dan qayta sanaydi
     const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return
-      io.disconnect()
+      if (!e.isIntersecting) { cancelAnimationFrame(raf); setN(0); return }
+      if (e.intersectionRatio < 0.5) return
+      cancelAnimationFrame(raf)
       const start = performance.now()
       const tick = (t: number) => {
         const p = Math.min(1, (t - start) / 1200)
@@ -20,7 +22,7 @@ function Counter({ value, decimals, prefix, suffix }: { value: number, decimals:
         if (p < 1) raf = requestAnimationFrame(tick)
       }
       raf = requestAnimationFrame(tick)
-    }, { threshold: 0.5 })
+    }, { threshold: [0, 0.5] })
     io.observe(el)
     return () => { io.disconnect(); cancelAnimationFrame(raf) }
   }, [value])
