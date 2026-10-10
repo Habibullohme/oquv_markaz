@@ -2,16 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #ffffff;
-  --fg: #0f172a;
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { @apply bg-paper text-ink-900 font-sans antialiased; }
+.dark body { @apply bg-ink-950 text-slate-100; }
+h1, h2, h3 { text-wrap: balance; }
+
+/* Sarlavhadagi "marker" bilan belgilangan so'z */
+.marker {
+  background: linear-gradient(transparent 58%, theme('colors.sun.400') 58%, theme('colors.sun.400') 92%, transparent 92%);
+  padding: 0 .1em;
 }
-.dark {
-  --bg: #0b1220;
-  --fg: #e2e8f0;
+.dark .marker { background: none; color: theme('colors.sun.400'); }
+
+/* Fondagi nozik katakcha (javoblar varag'i kabi) */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(38,41,196,.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(38,41,196,.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.dark .grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(154,168,255,.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(154,168,255,.07) 1px, transparent 1px);
 }
 
-html { scroll-behavior: smooth; }
-body { background: linear-gradient(to bottom, #f8fafc, #ffffff); color: var(--fg); }
-.dark body { background: linear-gradient(to bottom, #0b1220, #020617); }
-.glass { backdrop-filter: blur(8px); }
+.glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+input[type=range].band { @apply w-full cursor-pointer accent-brand-600; }
+.dark input[type=range].band { accent-color: theme('colors.sun.400'); }
+
+:focus-visible { outline: 2px solid theme('colors.brand.500'); outline-offset: 2px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

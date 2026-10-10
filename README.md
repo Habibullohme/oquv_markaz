@@ -30,3 +30,6 @@ npm run dev                  # http://localhost:3000
 1. vercel.com → GitHub bilan kiring → **Add New Project** → `oquv_markaz` ni tanlang.
 2. **Environment Variables** ga `TELEGRAM_BOT_TOKEN` va `TELEGRAM_CHAT_ID` ni qo'shing.
 3. **Deploy**. `.env` fayllar GitHub'ga yuklanmaydi (`.gitignore`).
+
+## Namuna ma'lumotlar
+`lib/i18n.ts` dagi **NAMUNA** deb belgilangan joylar (statistika raqamlari, o'qituvchilar, o'quvchilar natijalari va fikrlari) — haqiqiy ma'lumotlaringiz bilan almashtiring.
