@@ -30,11 +30,11 @@ export default function Results({ T }: { T: Dict['results'] }) {
       <div data-parallax="0.04" className="absolute -right-32 top-10 h-96 w-96 rounded-full bg-brand-300/30 dark:bg-brand-600/20 blur-3xl" aria-hidden="true" />
       <Container className="relative">
         <SectionHead eyebrow={T.eyebrow} title={T.title} />
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {T.items.map((r, i) => {
             const from = parseFloat(r.from), to = parseFloat(r.to)
             return (
-              <figure key={r.name} data-reveal={i === 0 ? 'left' : i === 2 ? 'right' : 'up'} data-delay={String(i * 120)}>
+              <figure key={r.name} data-reveal={i === 0 ? 'left' : i === 2 ? 'right' : 'up'} data-delay={String(i * 120)} className={i === 2 ? 'md:col-span-2 lg:col-span-1' : ''}>
                 <div data-tilt data-spotlight className="relative flex h-full flex-col rounded-[28px] border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900 p-7 md:p-8">
                   <div className="flex items-start justify-between gap-4">
                     <div>

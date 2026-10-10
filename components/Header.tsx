@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { ArrowUpRight, Menu, Moon, Phone, Send, Sun, X } from 'lucide-react'
 import type { Lang, Dict } from '@/lib/i18n'
 
-const KEYS = ['courses', 'method', 'teachers', 'results', 'pricing', 'faq'] as const
+const KEYS = ['why', 'courses', 'method', 'teachers', 'results', 'pricing', 'faq'] as const
 
 type LenisLike = { stop: () => void, start: () => void }
 
@@ -37,14 +37,14 @@ export default function Header({ lang, setLang, labels }: { lang: Lang, setLang:
       <header className={`sticky top-0 z-50 transition ${scrolled ? 'border-b border-slate-200/80 dark:border-white/10 bg-paper/80 dark:bg-ink-950/80 glass' : 'border-b border-transparent'}`}>
         <Container className="flex items-center justify-between gap-4 py-3">
           <Logo />
-          <nav className="hidden lg:flex items-center gap-1 text-sm font-semibold">
+          <nav className="hidden xl:flex items-center gap-1 text-sm font-semibold">
             {KEYS.map(k => <a key={k} className="rounded-lg px-3 py-2 text-slate-600 dark:text-slate-300 hover:text-brand-700 dark:hover:text-white hover:bg-white dark:hover:bg-white/5" href={`#${k}`}>{labels.nav[k]}</a>)}
           </nav>
           <div className="flex items-center gap-2">
             <button onClick={() => setLang(lang === 'en' ? 'uz' : 'en')} className={`${btn} hidden px-3 text-sm font-bold sm:flex`}>{lang === 'en' ? 'UZ' : 'EN'}</button>
             <button onClick={() => setDark(!dark)} aria-label="Theme" className={`${btn} hidden w-10 sm:flex`}>{dark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}</button>
             <a href="#contact" className="hidden sm:inline-flex h-10 items-center rounded-xl bg-brand-600 px-4 text-sm font-bold text-white hover:bg-brand-700 transition"><Roll text={labels.nav.contact} /></a>
-            <button onClick={() => setOpen(true)} aria-label={labels.menu} aria-expanded={open} aria-controls="mnav" className="flex h-11 items-center gap-2 rounded-full bg-ink-900 pl-4 pr-3 text-sm font-bold text-white dark:bg-white dark:text-ink-900 lg:hidden">
+            <button onClick={() => setOpen(true)} aria-label={labels.menu} aria-expanded={open} aria-controls="mnav" className="flex h-11 items-center gap-2 rounded-full bg-ink-900 pl-4 pr-3 text-sm font-bold text-white dark:bg-white dark:text-ink-900 xl:hidden">
               {labels.menu}<Menu className="h-5 w-5" />
             </button>
           </div>
@@ -52,7 +52,7 @@ export default function Header({ lang, setLang, labels }: { lang: Lang, setLang:
       </header>
 
       {/* To'liq ekranli telefon menyusi (header'dan tashqarida: header'ning blur effekti fixed elementni buzmasligi uchun) */}
-      <div id="mnav" className="mnav fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-ink-950 text-white lg:hidden" data-open={open ? '' : undefined} aria-hidden={!open} {...({ inert: open ? undefined : '' } as object)}>
+      <div id="mnav" className="mnav fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-ink-950 text-white xl:hidden" data-open={open ? '' : undefined} aria-hidden={!open} {...({ inert: open ? undefined : '' } as object)}>
         <div className="absolute inset-0 grid-bg opacity-50" aria-hidden="true" />
         <div className="absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-brand-600/40 blur-3xl" aria-hidden="true" />
         <Container className="relative flex w-full items-center justify-between py-3">
@@ -65,7 +65,7 @@ export default function Header({ lang, setLang, labels }: { lang: Lang, setLang:
           <nav className="flex flex-col">
             {KEYS.map((k, i) => (
               <a key={k} href={`#${k}`} onClick={() => setOpen(false)} style={{ ['--i' as string]: i }}
-                className="mnav-item group flex items-center justify-between border-b border-white/10 py-4 font-display text-[2rem] sm:text-5xl font-bold leading-none active:text-sun-400">
+                className="mnav-item group flex items-center justify-between border-b border-white/10 py-3.5 font-display text-[1.8rem] sm:text-5xl font-bold leading-none active:text-sun-400 [@media(max-height:700px)]:py-2.5 [@media(max-height:700px)]:text-2xl">
                 {labels.nav[k]}
                 <ArrowUpRight className="h-7 w-7 text-white/30 transition group-active:rotate-45 group-active:text-sun-400" />
               </a>

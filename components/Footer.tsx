@@ -6,7 +6,7 @@ import { SITE } from '@/lib/site'
 import type { Dict } from '@/lib/i18n'
 
 export default function Footer({ T }: { T: Dict }) {
-  const links = (['courses', 'method', 'teachers', 'results', 'pricing', 'faq'] as const)
+  const links = (['why', 'courses', 'method', 'teachers', 'results', 'pricing', 'faq'] as const)
   return (
     <footer className="border-t border-slate-200 dark:border-white/10 pt-14 pb-24 md:pb-10">
       <Container>

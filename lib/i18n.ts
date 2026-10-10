@@ -5,9 +5,12 @@
 export const STR = {
   uz: {
     menu: 'Menyu',
-    nav: { courses: 'Kurslar', method: 'Metodika', teachers: "O'qituvchilar", results: 'Natijalar', pricing: 'Narxlar', faq: 'Savollar', contact: 'Aloqa' },
+    nav: { why: 'Afzalliklar', courses: 'Kurslar', method: 'Metodika', teachers: "O'qituvchilar", results: 'Natijalar', pricing: 'Narxlar', faq: 'Savollar', contact: 'Aloqa' },
     hero: {
       eyebrow: "Yangi guruhlar har oy boshlanadi",
+      chipSpeaking: 'Speaking',
+      chipMock: 'Mock test #8',
+      chipFeedback: 'Essay tekshirildi',
       titleA: 'IELTS',
       titleMark: '7.0+',
       titleB: "natijaga sinalgan tizim bilan erishing",
@@ -31,6 +34,16 @@ export const STR = {
       { value: 1.0, prefix: '+', suffix: '', decimals: 1, label: "o'rtacha band o'sishi" },
       { value: 8, prefix: '', suffix: '', decimals: 0, label: 'haftalik intensiv kurs' },
     ],
+    features: {
+      eyebrow: 'Nima uchun biz',
+      title: "Natija tasodif emas — tizim",
+      subtitle: "Har bir dars, har bir mock test va har bir feedback bitta maqsadga xizmat qiladi: sizning ballingiz.",
+      templates: { title: 'Band 9 shablonlari', desc: "Writing Task 1 va 2 uchun tayyor tuzilmalar va bog'lovchi iboralar. O'qituvchi har bir inshoni qizil ruchka bilan tekshiradi.", stamp: 'BAND 9' },
+      mock: { title: 'Har hafta mock test', desc: "Haqiqiy imtihon sharoitida test va band hisoboti. Grafik — namuna o'quvchining 8 haftalik natijasi.", week: 'hafta', chart: "Haftalik mock test bali (namuna)" },
+      speaking: { title: 'Speaking klub', desc: 'Har kuni jonli suhbat: Part 1, 2, 3 savollari va talaffuz mashqlari.', q: 'Describe a place you love.', a: 'I’d like to talk about…' },
+      bilingual: { title: 'Ikki tilli dars', desc: "Murakkab grammatika o'zbek tilida tushuntiriladi, amaliyot esa faqat ingliz tilida." },
+      groups: { title: 'Kichik guruhlar', desc: "Guruhda 12 kishidan ko'p emas — har biriga e'tibor yetadi.", seats: "joy band" },
+    },
     courses: {
       eyebrow: 'Kurslar',
       title: "Maqsadingizga mos yo'nalish",
@@ -140,9 +153,12 @@ export const STR = {
   },
   en: {
     menu: 'Menu',
-    nav: { courses: 'Courses', method: 'Method', teachers: 'Teachers', results: 'Results', pricing: 'Pricing', faq: 'FAQ', contact: 'Contact' },
+    nav: { why: 'Why us', courses: 'Courses', method: 'Method', teachers: 'Teachers', results: 'Results', pricing: 'Pricing', faq: 'FAQ', contact: 'Contact' },
     hero: {
       eyebrow: 'New groups start every month',
+      chipSpeaking: 'Speaking',
+      chipMock: 'Mock test #8',
+      chipFeedback: 'Essay marked',
       titleA: 'Get IELTS',
       titleMark: '7.0+',
       titleB: 'with a proven system',
@@ -165,6 +181,16 @@ export const STR = {
       { value: 1.0, prefix: '+', suffix: '', decimals: 1, label: 'average band gain' },
       { value: 8, prefix: '', suffix: '', decimals: 0, label: 'week intensive course' },
     ],
+    features: {
+      eyebrow: 'Why us',
+      title: 'Results are not luck — they are a system',
+      subtitle: 'Every lesson, every mock test and every piece of feedback serves one goal: your score.',
+      templates: { title: 'Band 9 templates', desc: 'Ready-made structures and linking phrases for Writing Task 1 and 2. Your teacher marks every essay in red pen.', stamp: 'BAND 9' },
+      mock: { title: 'Weekly mock tests', desc: 'A test in real exam conditions with a band report. The chart shows a sample student’s 8 weeks.', week: 'week', chart: 'Weekly mock test band (sample)' },
+      speaking: { title: 'Speaking club', desc: 'Live conversation every day: Part 1, 2 and 3 questions plus pronunciation drills.', q: 'Describe a place you love.', a: 'I’d like to talk about…' },
+      bilingual: { title: 'Bilingual lessons', desc: 'Tricky grammar is explained in Uzbek; practice happens in English only.' },
+      groups: { title: 'Small groups', desc: 'No more than 12 students per group, so everyone gets attention.', seats: 'seats taken' },
+    },
     courses: {
       eyebrow: 'Courses',
       title: 'A path for every goal',

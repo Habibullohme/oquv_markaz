@@ -1,6 +1,7 @@
 import { ArrowUpRight, CalendarDays, Clock, Users } from 'lucide-react'
 import Container from './Container'
 import SectionHead from './SectionHead'
+import CourseArt from './CourseArt'
 import type { Dict } from '@/lib/i18n'
 
 const ICONS = [Clock, CalendarDays, Users]
@@ -20,10 +21,11 @@ export default function Courses({ T }: { T: Dict['courses'] }) {
                   <span className="rounded-full chip px-3 py-1 text-xs font-bold ">{c.tag}</span>
                   <span className="font-display text-sm font-bold opacity-70">{c.level}</span>
                 </div>
-                <div className="mt-6 font-display text-6xl md:text-8xl font-extrabold leading-none opacity-15">{String(i + 1).padStart(2, '0')}</div>
+                <div className="mt-4 font-display text-sm font-extrabold opacity-40">{String(i + 1).padStart(2, '0')} / {String(T.items.length).padStart(2, '0')}</div>
+                <CourseArt i={i} />
                 </div>
                 <div className="flex flex-col">
-                <h3 className="font-display text-2xl md:text-4xl font-bold">{c.title}</h3>
+                <h3 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold">{c.title}</h3>
                 <p className="mt-3 text-lg leading-relaxed opacity-80">{c.desc}</p>
                 <ul className="mt-6 flex flex-wrap gap-2">
                   {c.meta.map((m, j) => {

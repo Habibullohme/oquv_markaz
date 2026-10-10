@@ -33,7 +33,7 @@ export default function Teachers({ T }: { T: Dict['teachers'] }) {
             const dark = DARK_TEXT[i % 4]
             return (
               <article key={t.name} data-reveal="up" data-delay={String(i * 110)}
-                onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} tabIndex={0}
+                onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)} tabIndex={0}
                 className={`tgrow group relative min-h-[420px] w-[78%] shrink-0 snap-start overflow-hidden rounded-[28px] bg-gradient-to-br ${TONES[i % 4]} ${dark ? 'text-ink-900' : 'text-white'} sm:w-[46%] lg:min-h-0 lg:w-auto lg:min-w-0 lg:basis-0 lg:shrink lg:transition-[flex-grow] lg:duration-700 lg:ease-[cubic-bezier(.7,0,.2,1)] ${open ? 'lg:grow-[3.4]' : 'lg:grow'}`}>
                 {/* Katta bosh harflar fonda */}
                 <span aria-hidden="true" className={`pointer-events-none absolute -bottom-10 -right-6 font-display text-[11rem] font-extrabold leading-none opacity-20 transition-transform duration-700 ${open ? 'lg:scale-100 lg:rotate-0' : 'lg:scale-75 lg:-rotate-12'}`}>{initials(t.name)}</span>

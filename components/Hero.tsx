@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import Container from './Container'
 import BandCalculator from './BandCalculator'
 import Roll from './Roll'
+import { FileCheck2, Mic, TrendingUp } from 'lucide-react'
 import type { Dict } from '@/lib/i18n'
 
 const AVATARS = ['DS', 'ST', 'MR', 'JK']
@@ -40,7 +41,7 @@ export default function Hero({ T }: { T: Dict }) {
             <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" /></span>
             {T.hero.eyebrow}
           </div>
-          <h1 className="mt-6 font-display text-[2.4rem] leading-[1.1] sm:text-5xl lg:text-[3.6rem] font-extrabold tracking-tight">
+          <h1 className="mt-6 font-display text-[2.4rem] leading-[1.1] sm:text-5xl lg:text-5xl xl:text-[3.6rem] font-extrabold tracking-tight">
             <Words text={T.hero.titleA} start={0} />
             <span className="word"><span className="marker" style={{ ['--i' as string]: 2 }}>{T.hero.titleMark}</span></span>{' '}
             <Words text={T.hero.titleB} start={3} />
@@ -62,8 +63,27 @@ export default function Hero({ T }: { T: Dict }) {
             </div>
           </div>
         </div>
-        <div className="hero-in relative animate-fade-up [animation-delay:150ms]">
+        <div className="hero-in relative mx-auto w-full max-w-xl animate-fade-up [animation-delay:150ms] lg:max-w-none">
           <SpinBadge />
+          {/* Suzib yuruvchi kartochkalar */}
+          <div data-parallax="0.03" className="absolute -right-3 -top-7 z-20 hidden sm:block">
+            <div className="animate-float flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lift dark:border-white/10 dark:bg-ink-900">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sun-400 text-ink-900"><Mic className="h-4 w-4" /></span>
+              <div className="leading-tight"><div className="text-xs text-slate-500 dark:text-slate-400">{T.hero.chipSpeaking}</div><div className="font-display text-lg font-extrabold">8.0</div></div>
+            </div>
+          </div>
+          <div data-parallax="-0.04" className="absolute -left-44 top-2 z-20 hidden xl:block">
+            <div className="animate-float [animation-delay:-2s] flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lift dark:border-white/10 dark:bg-ink-900">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500 text-white"><FileCheck2 className="h-4 w-4" /></span>
+              <div className="leading-tight"><div className="text-xs text-slate-500 dark:text-slate-400">{T.hero.chipFeedback}</div><div className="flex gap-0.5 text-sun-500" aria-hidden="true">{'★★★★★'}</div></div>
+            </div>
+          </div>
+          <div data-parallax="0.05" className="absolute -bottom-10 right-6 z-20 hidden sm:block">
+            <div className="animate-float [animation-delay:-3.5s] flex items-center gap-3 rounded-2xl bg-brand-600 px-4 py-3 text-white shadow-lift">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15"><TrendingUp className="h-4 w-4" /></span>
+              <div className="leading-tight"><div className="text-xs text-brand-100">{T.hero.chipMock}</div><div className="font-display text-lg font-extrabold">6.5 → 7.5</div></div>
+            </div>
+          </div>
           <div data-tilt className="relative rounded-[28px]">
             <BandCalculator labels={T.calc} />
           </div>
