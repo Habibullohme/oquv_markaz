@@ -22,7 +22,12 @@ export default function Footer({ T }: { T: Dict }) {
             {links.map(k => <a key={k} href={`#${k}`} className="text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-sun-400">{T.nav[k]}</a>)}
           </nav>
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-slate-200 dark:border-white/10 pt-6 text-sm text-slate-500 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <div data-reveal="up" className="mt-14 select-none" aria-hidden="true">
+          <div className="split whitespace-nowrap font-display text-[9vw] xl:text-[7.6rem] font-extrabold leading-[0.85] tracking-tighter text-brand-700 dark:text-white">
+            {Array.from('IELTS ACADEMY').map((ch, i) => <span key={i} className="sw"><span className="ch" style={{ ['--c' as string]: i * 3 }}>{ch === ' ' ? '\u00a0' : ch}</span></span>)}
+          </div>
+        </div>
+        <div className="mt-8 flex flex-col gap-3 border-t border-slate-200 dark:border-white/10 pt-6 text-sm text-slate-500 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <div>© {new Date().getFullYear()} {SITE.name}. {T.footer.rights}</div>
           <a href="#home" className="hover:text-brand-600 dark:hover:text-sun-400">{T.footer.top}</a>
         </div>

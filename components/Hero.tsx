@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import Container from './Container'
 import BandCalculator from './BandCalculator'
+import Roll from './Roll'
 import type { Dict } from '@/lib/i18n'
 
 const AVATARS = ['DS', 'ST', 'MR', 'JK']
@@ -29,11 +30,12 @@ export default function Hero({ T }: { T: Dict }) {
   return (
     <section id="home" className="relative overflow-hidden">
       <div className="absolute inset-0 grid-bg [mask-image:radial-gradient(ellipse_at_top,black_40%,transparent_75%)]" aria-hidden="true" />
+      <canvas data-particles aria-hidden="true" style={{ ['--accent' as string]: '#ffd43b' }} className="absolute inset-0 h-full w-full text-brand-500 dark:text-brand-300 [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" />
       <div data-parallax="0.06" className="absolute -top-40 -right-32 h-[480px] w-[480px] rounded-full bg-brand-400/30 dark:bg-brand-600/30 blur-3xl" aria-hidden="true" />
       <div data-parallax="-0.08" className="absolute top-60 -left-40 h-[360px] w-[360px] rounded-full bg-sun-400/30 dark:bg-sun-400/10 blur-3xl" aria-hidden="true" />
 
       <Container className="relative grid items-center gap-12 pt-12 pb-16 md:pt-20 md:pb-24 lg:grid-cols-[1.15fr_1fr]">
-        <div className="animate-fade-up">
+        <div className="hero-in animate-fade-up">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-200 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-1.5 text-sm font-semibold text-brand-800 dark:text-brand-100">
             <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" /></span>
             {T.hero.eyebrow}
@@ -45,8 +47,8 @@ export default function Hero({ T }: { T: Dict }) {
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">{T.hero.subtitle}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#contact" data-magnetic className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white shadow-soft hover:bg-brand-700 hover:-translate-y-0.5 transition">{T.hero.cta1} →</a>
-            <a href="#courses" data-magnetic className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-white/15 px-6 py-4 font-bold hover:bg-white dark:hover:bg-white/5 transition">{T.hero.cta2}</a>
+            <a href="#contact" data-magnetic className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white shadow-soft hover:bg-brand-700 transition"><Roll text={`${T.hero.cta1} →`} /></a>
+            <a href="#courses" data-magnetic className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-white/15 px-6 py-4 font-bold hover:bg-white dark:hover:bg-white/5 transition"><Roll text={T.hero.cta2} /></a>
           </div>
           <div className="mt-10 flex items-center gap-4">
             <div className="flex -space-x-3">
@@ -60,7 +62,7 @@ export default function Hero({ T }: { T: Dict }) {
             </div>
           </div>
         </div>
-        <div className="relative animate-fade-up [animation-delay:150ms]">
+        <div className="hero-in relative animate-fade-up [animation-delay:150ms]">
           <SpinBadge />
           <div data-tilt className="relative rounded-[28px]">
             <BandCalculator labels={T.calc} />

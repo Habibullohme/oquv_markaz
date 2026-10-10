@@ -20,7 +20,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800&display=swap" />
       </head>
       <body>
+        <div id="preloader" aria-hidden="true">
+          <div className="font-display text-[11vw] font-extrabold leading-[0.95] tracking-tight">
+            <div className="pl-word"><span>IELTS</span></div>
+            <div className="pl-word"><span style={{ animationDelay: '.08s' }} className="text-sun-400">Academy</span></div>
+          </div>
+          <div className="mt-8 flex items-end justify-between gap-6">
+            <div className="h-px flex-1 bg-white/15"><div data-pl-bar className="h-px origin-left scale-x-0 bg-sun-400" /></div>
+            <div data-pl-count className="font-display text-5xl font-extrabold tabular-nums">00</div>
+          </div>
+        </div>
         {children}
+        <Script src="/vendor/lenis.min.js" strategy="afterInteractive" />
         <Script src="/effects.js" strategy="afterInteractive" />
       </body>
     </html>

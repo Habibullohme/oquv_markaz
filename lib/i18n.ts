@@ -46,6 +46,8 @@ export const STR = {
     method: {
       eyebrow: 'Metodika',
       title: 'Natijaga olib boradigan 4 qadam',
+      cta: 'Bepul diagnostik testdan boshlang',
+      scroll: 'Scroll qiling →',
       steps: [
         { title: 'Diagnostik test', desc: "To'liq IELTS formatidagi bepul test. Kuchli va zaif tomonlaringizni aniqlaymiz." },
         { title: 'Shaxsiy reja', desc: 'Maqsad ballingiz va imtihon sanangizga qarab haftalik reja tuzamiz.' },
@@ -170,6 +172,8 @@ export const STR = {
     method: {
       eyebrow: 'Method',
       title: '4 steps to your score',
+      cta: 'Start with a free diagnostic test',
+      scroll: 'Keep scrolling →',
       steps: [
         { title: 'Diagnostic test', desc: 'A free full-format IELTS test that shows your strengths and weak spots.' },
         { title: 'Personal plan', desc: 'A weekly plan built around your target band and exam date.' },

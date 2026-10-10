@@ -22,6 +22,8 @@ export default function ContactForm({ labels }: { labels: Dict['contact'] }) {
       const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
       if (!res.ok) throw new Error('Failed')
       setStatus({ ok: true, text: labels.success })
+      const r = (e.target as HTMLFormElement).querySelector('button')?.getBoundingClientRect()
+      ;(window as unknown as { __confetti?: (x?: number, y?: number) => void }).__confetti?.(r ? r.left + r.width / 2 : undefined, r ? r.top : undefined)
       setForm(EMPTY)
       setTimeout(() => setStatus(null), 5000)
     } catch {
