@@ -30,7 +30,7 @@ export default function BandCalculator({ labels, prefill }: { labels: Dict['calc
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="font-display text-lg font-bold">{labels.title}</div>
-          <p className="mt-1 max-w-[30ch] text-sm text-slate-500 dark:text-slate-400">{labels.hint}</p>
+          <p className="mt-1 max-w-[30ch] text-sm text-slate-600 dark:text-slate-400">{labels.hint}</p>
         </div>
         <div className="relative h-[124px] w-[124px] shrink-0">
           <svg viewBox="0 0 124 124" className="h-full w-full -rotate-90">
@@ -41,7 +41,7 @@ export default function BandCalculator({ labels, prefill }: { labels: Dict['calc
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <div className="font-display text-4xl font-extrabold tabular-nums" aria-live="polite">{overall.toFixed(1)}</div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{labels.overall}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">{labels.overall}</div>
           </div>
         </div>
       </div>

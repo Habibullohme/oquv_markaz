@@ -29,8 +29,8 @@ const config: Config = {
         paper: '#f7f7fb',
       },
       fontFamily: {
-        display: ['Unbounded', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        sans: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         soft: '0 10px 30px -12px rgba(18,20,71,0.18)',

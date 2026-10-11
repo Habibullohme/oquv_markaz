@@ -87,9 +87,9 @@ html.lenis { scroll-behavior: auto; }
 /* JS ishlamasa ham preloader o'zi yopiladi */
 #preloader { animation: pl-fallback 0s 3.5s forwards; }
 @keyframes pl-fallback { to { transform: translateY(-100%); visibility: hidden; } }
-.fx:not(.pl-done) body { overflow: hidden; }
-.fx:not(.pl-done) .hero-in { animation-play-state: paused !important; }
-.fx:not(.pl-done) .hero-in .word > span { animation-play-state: paused; }
+.fx:not(.pl-done):not(.pl-skip) body { overflow: hidden; }
+.fx:not(.pl-done):not(.pl-skip) .hero-in { animation-play-state: paused !important; }
+.fx:not(.pl-done):not(.pl-skip) .hero-in .word > span { animation-play-state: paused; }
 
 /* ===== Harfma-harf chiqadigan sarlavhalar ===== */
 .sw { display: inline-block; white-space: nowrap; overflow: hidden; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; }

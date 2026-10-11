@@ -10,7 +10,7 @@ type LenisLike = { stop: () => void, start: () => void }
 
 // Ariza oynasi: telefonda pastdan ko'tariladigan panel, kompyuterda markazda ochiladigan oyna.
 // Saytdagi barcha href="#contact" tugmalari sahifani pastga sakratish o'rniga shu oynani ochadi.
-export default function EnrollSheet({ T }: { T: Dict }) {
+export default function EnrollSheet({ T }: { T: Pick<Dict, 'enroll' | 'contact' | 'call'> }) {
   const [open, setOpen] = useState(false)
   const [item, setItem] = useState<string | null>(null)
   const [drag, setDrag] = useState(0)
@@ -82,7 +82,7 @@ export default function EnrollSheet({ T }: { T: Dict }) {
           </div>
           <div className="sheet-item px-6 py-6 md:px-8" style={{ ['--i' as string]: 2 }}>
             <ContactForm labels={T.contact} idPrefix="sheet" />
-            <div className="mt-6 flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+            <div className="mt-6 flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
               <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />{T.enroll.or}<span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 pb-[env(safe-area-inset-bottom,0px)]">

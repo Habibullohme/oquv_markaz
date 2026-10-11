@@ -5,7 +5,7 @@ import { SITE } from '@/lib/site'
 import type { Dict } from '@/lib/i18n'
 
 // Telefonda: bosh qismdan o'tgach pastda paydo bo'ladigan panel. Aloqa bo'limiga yetganda yashirinadi.
-export default function MobileBar({ T }: { T: Dict }) {
+export default function MobileBar({ T }: { T: Pick<Dict, 'call' | 'mobileCta' | 'telegram'> }) {
   const [show, setShow] = useState(false)
   useEffect(() => {
     // Kadrga bir marta tekshiramiz (har bir scroll hodisasida emas)

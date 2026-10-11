@@ -6,7 +6,7 @@ export default function Logo() {
       </span>
       <span className="leading-tight">
         <span className="block font-display text-[15px] font-bold">IELTS Academy</span>
-        <span className="block text-xs text-slate-500 dark:text-slate-400">Band 7+ · CEFR B1–C1</span>
+        <span className="block text-xs text-slate-600 dark:text-slate-400">Band 7+ · CEFR B1–C1</span>
       </span>
     </a>
   )

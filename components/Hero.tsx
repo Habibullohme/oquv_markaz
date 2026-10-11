@@ -54,7 +54,7 @@ export default function Hero({ T }: { T: Dict }) {
           <div className="mt-10 flex items-center gap-4">
             <div className="flex -space-x-3">
               {AVATARS.map((a, i) => (
-                <div key={a} className={`flex h-11 w-11 items-center justify-center rounded-full border-2 border-paper dark:border-ink-950 text-xs font-bold text-white ${['bg-brand-600', 'bg-sun-500', 'bg-emerald-500', 'bg-rose-500'][i]}`}>{a}</div>
+                <div key={a} className={`flex h-11 w-11 items-center justify-center rounded-full border-2 border-paper dark:border-ink-950 text-xs font-bold ${['bg-brand-600 text-white', 'bg-sun-400 text-ink-900', 'bg-emerald-700 text-white', 'bg-rose-600 text-white'][i]}`}>{a}</div>
               ))}
             </div>
             <div>
@@ -69,13 +69,13 @@ export default function Hero({ T }: { T: Dict }) {
           <div data-parallax="0.03" className="absolute -right-3 -top-7 z-20 hidden sm:block">
             <div className="animate-float flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lift dark:border-white/10 dark:bg-ink-900">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sun-400 text-ink-900"><Mic className="h-4 w-4" /></span>
-              <div className="leading-tight"><div className="text-xs text-slate-500 dark:text-slate-400">{T.hero.chipSpeaking}</div><div className="font-display text-lg font-extrabold">8.0</div></div>
+              <div className="leading-tight"><div className="text-xs text-slate-600 dark:text-slate-400">{T.hero.chipSpeaking}</div><div className="font-display text-lg font-extrabold">8.0</div></div>
             </div>
           </div>
           <div data-parallax="-0.04" className="absolute -left-44 top-2 z-20 hidden xl:block">
             <div className="animate-float [animation-delay:-2s] flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-lift dark:border-white/10 dark:bg-ink-900">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500 text-white"><FileCheck2 className="h-4 w-4" /></span>
-              <div className="leading-tight"><div className="text-xs text-slate-500 dark:text-slate-400">{T.hero.chipFeedback}</div><div className="flex gap-0.5 text-sun-500" aria-hidden="true">{'★★★★★'}</div></div>
+              <div className="leading-tight"><div className="text-xs text-slate-600 dark:text-slate-400">{T.hero.chipFeedback}</div><div className="flex gap-0.5 text-sun-500" aria-hidden="true">{'★★★★★'}</div></div>
             </div>
           </div>
           <div data-parallax="0.05" className="absolute -bottom-10 right-6 z-20 hidden sm:block">

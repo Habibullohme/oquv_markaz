@@ -45,10 +45,12 @@
 
   // ---- Silliq scroll (Lenis) ----
   function initLenis() {
-    if (reduce || window.__lenis || !window.Lenis) return;
+    if (reduce || !fine || window.__lenis || !window.Lenis) return;
     try { window.__lenis = new window.Lenis({ autoRaf: true, lerp: 0.09 }); } catch (e) {}
   }
-  if (window.Lenis) initLenis(); else addEventListener('load', initLenis);
+  // Lenis skripti sahifa yuklangandan keyin keladi — paydo bo'lguncha qisqa kutamiz
+  function tryLenis(n) { if (window.Lenis) initLenis(); else if (n < 24 && fine) setTimeout(function () { tryLenis(n + 1); }, 250); }
+  if (document.readyState === 'complete') tryLenis(0); else addEventListener('load', function () { tryLenis(0); });
 
   // ---- Scroll qilganda chiqib kelish ----
   // Har safar ekranga kirganda qayta o'ynaydi. Ekrandan to'liq chiqqanda holat tiklanadi:
@@ -218,7 +220,8 @@
   addEventListener('pointermove', function (e) { pointer.x = e.clientX; pointer.y = e.clientY; lastMove = performance.now(); }, { passive: true });
   addEventListener('touchmove', function (e) { var t = e.touches[0]; if (t) { pointer.x = t.clientX; pointer.y = t.clientY; lastMove = performance.now(); } }, { passive: true });
   addEventListener('touchstart', function (e) { var t = e.touches[0]; if (t) { pointer.x = t.clientX; pointer.y = t.clientY; lastMove = performance.now(); } }, { passive: true });
-  qa('[data-particles]').forEach(function (cv) {
+  // Og'ir canvas sahifa ochilishini sekinlashtirmasligi uchun brauzer bo'sh qolganda ishga tushadi
+  (window.requestIdleCallback || function (f) { return setTimeout(f, 300); })(function () { qa('[data-particles]').forEach(function (cv) {
     if (reduce) return;
     var lite = !fine || innerWidth < 1024;
     var g = cv.getContext('2d'), dpr = lite ? 1 : Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, pts = [], color = '#4b55f5', accent = '#ffd43b';
@@ -270,7 +273,7 @@
       }
       g.globalAlpha = 1;
     })();
-  });
+  }); }, { timeout: 1500 });
 
   if (reduce || !fine) return;
 

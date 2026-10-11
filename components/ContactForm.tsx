@@ -15,7 +15,7 @@ function Field({ id, label, textarea, ...rest }: { id: string, label: string, te
       {textarea
         ? <textarea id={id} placeholder=" " rows={4} className={`${cls} resize-none`} {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} />
         : <input id={id} placeholder=" " className={cls} {...(rest as React.InputHTMLAttributes<HTMLInputElement>)} />}
-      <label htmlFor={id} className="pointer-events-none absolute left-4 top-4 origin-left text-slate-500 dark:text-slate-400 transition-all duration-300 peer-focus:top-2 peer-focus:scale-[.78] peer-focus:text-brand-600 dark:peer-focus:text-sun-400 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:scale-[.78]">{label}</label>
+      <label htmlFor={id} className="pointer-events-none absolute left-4 top-4 origin-left text-slate-600 dark:text-slate-400 transition-all duration-300 peer-focus:top-2 peer-focus:scale-[.78] peer-focus:text-brand-600 dark:peer-focus:text-sun-400 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:scale-[.78]">{label}</label>
     </div>
   )
 }

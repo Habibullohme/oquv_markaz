@@ -23,7 +23,7 @@ export default function Teachers({ T }: { T: Dict['teachers'] }) {
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead eyebrow={T.eyebrow} title={T.title} subtitle={T.subtitle} />
-          <div className="hidden lg:block text-sm font-semibold text-slate-500 dark:text-slate-400">{T.hint}</div>
+          <div className="hidden lg:block text-sm font-semibold text-slate-600 dark:text-slate-400">{T.hint}</div>
         </div>
 
         {/* Telefon va planshet: ixcham kartalar, chapdan "ochilib" chiqadi */}
@@ -42,7 +42,7 @@ export default function Teachers({ T }: { T: Dict['teachers'] }) {
                 <div className="min-w-0 flex-1 p-5">
                   <h3 className="font-display text-lg font-bold leading-tight">{t.name}</h3>
                   <div className="mt-1 text-sm font-semibold text-brand-600 dark:text-sun-400">{t.role}</div>
-                  <div className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t.exp}</div>
+                  <div className="mt-1 text-sm text-slate-600 dark:text-slate-400">{t.exp}</div>
                   {/* Band shkalasi: 9 dan qancha */}
                   <div className="mt-3 flex items-center gap-2" aria-hidden="true">
                     <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">

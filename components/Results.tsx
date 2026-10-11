@@ -17,7 +17,7 @@ function BandScale({ from, to }: { from: number, to: number }) {
         <span className="absolute top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-slate-300 dark:border-white/30 bg-white dark:bg-ink-900" style={{ left: `${pos(from)}%` }} />
         <span className="grow-dot absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-white dark:border-ink-900 bg-brand-600 dark:bg-sun-400 shadow-soft" style={{ left: `${pos(to)}%` }} />
       </div>
-      <div className="relative mt-3 h-4 text-[11px] font-semibold text-slate-400 tabular-nums">
+      <div className="relative mt-3 h-4 text-[11px] font-semibold text-slate-500 tabular-nums">
         {TICKS.map(t => <span key={t} className="absolute -translate-x-1/2" style={{ left: `${pos(t)}%` }}>{t}.0</span>)}
       </div>
     </div>
@@ -38,7 +38,7 @@ export default function Results({ T }: { T: Dict['results'] }) {
                 <div data-tilt data-spotlight className="relative flex h-full flex-col rounded-[28px] border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900 p-7 md:p-8">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">{T.from} → {T.to}</div>
+                      <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">{T.from} → {T.to}</div>
                       <div className="mt-1 flex items-baseline gap-3 font-display font-extrabold tabular-nums">
                         <span className="text-3xl text-slate-300 dark:text-white/30 line-through decoration-2">{r.from}</span>
                         <span className="text-6xl text-brand-700 dark:text-sun-400">{r.to}</span>
@@ -58,7 +58,7 @@ export default function Results({ T }: { T: Dict['results'] }) {
                       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-xs text-white">{r.name.split(' ').map(w => w[0]).join('')}</span>
                       {r.name}
                     </span>
-                    <span className="text-slate-500 dark:text-slate-400">{r.weeks} {T.weeks}</span>
+                    <span className="text-slate-600 dark:text-slate-400">{r.weeks} {T.weeks}</span>
                   </figcaption>
                 </div>
               </figure>

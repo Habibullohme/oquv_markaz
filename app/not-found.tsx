@@ -12,7 +12,7 @@ export default function NotFound() {
         </div>
         <h1 className="mt-6 font-display text-3xl font-bold md:text-4xl">{uz.title}</h1>
         <p className="mx-auto mt-3 max-w-md text-lg text-slate-600 dark:text-slate-400">{uz.text}</p>
-        <p className="mx-auto mt-1 max-w-md text-sm text-slate-400" lang="en">{en.title}. {en.text}</p>
+        <p className="mx-auto mt-1 max-w-md text-sm text-slate-500" lang="en">{en.title}. {en.text}</p>
         <Link href="/" className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white hover:bg-brand-700">
           ← {uz.back}
         </Link>

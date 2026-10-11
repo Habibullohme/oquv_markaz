@@ -20,9 +20,9 @@ export default function Pricing({ T }: { T: Dict['pricing'] }) {
                     <h3 className="font-display text-lg font-bold">{p.name}</h3>
                     <div className="mt-4 flex items-baseline gap-1">
                       <span className={`font-display text-6xl md:text-5xl lg:text-6xl font-extrabold tabular-nums ${pop ? 'text-sun-400' : ''}`}>{p.price}</span>
-                      <span className={pop ? 'text-slate-300' : 'text-slate-500'}>{p.per}</span>
+                      <span className={pop ? 'text-slate-300' : 'text-slate-600'}>{p.per}</span>
                     </div>
-                    <div className={`mt-2 text-sm ${pop ? 'text-slate-300' : 'text-slate-500 dark:text-slate-400'}`}>{p.note}</div>
+                    <div className={`mt-2 text-sm ${pop ? 'text-slate-300' : 'text-slate-600 dark:text-slate-400'}`}>{p.note}</div>
                     <div className={`my-6 h-px ${pop ? 'bg-white/10' : 'bg-slate-100 dark:bg-white/10'}`} />
                     <ul className="flex-1 space-y-3">
                       {p.features.map((f, j) => (

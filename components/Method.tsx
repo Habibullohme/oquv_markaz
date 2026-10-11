@@ -15,7 +15,7 @@ export default function Method({ T }: { T: Dict['method'] }) {
         <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-brand-600/40 blur-3xl" aria-hidden="true" />
         <Container className="relative flex w-full items-end justify-between gap-6">
           <SectionHead eyebrow={T.eyebrow} title={T.title} light />
-          <div className="hidden lg:block text-sm font-semibold text-slate-400">{T.scroll}</div>
+          <div className="hidden lg:block text-sm font-semibold text-slate-500">{T.scroll}</div>
         </Container>
         <div className="relative mt-12 lg:mt-14 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
           <ol data-hscroll-track className="relative grid gap-5 pl-12 pr-4 sm:pl-14 sm:pr-6 lg:flex lg:w-max lg:gap-6 lg:px-0 lg:pr-[10vw] lg:will-change-transform">

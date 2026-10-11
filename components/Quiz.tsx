@@ -11,7 +11,7 @@ import { firstSet, randomSet, type Question } from '@/lib/quiz-bank'
 
 // To'g'ri javoblar soni → taxminiy IELTS band va tavsiya etilgan kurs (kurslar ro'yxatidagi indeks)
 const RESULT = [
-  { max: 2, band: 4.0, range: '3.5–4.0', course: 1 },
+  { max: 2, band: 3.5, range: '3.5–4.0', course: 1 },
   { max: 4, band: 5.0, range: '4.5–5.0', course: 1 },
   { max: 6, band: 6.0, range: '5.5–6.5', course: 0 },
   { max: 7, band: 7.0, range: '7.0–7.5', course: 0 },
@@ -76,7 +76,7 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
 
             {q && (
               <div key={step} className="quiz-in min-h-[340px]">
-                <div className="flex items-center justify-between text-sm font-semibold text-slate-500 dark:text-slate-400">
+                <div className="flex items-center justify-between text-sm font-semibold text-slate-600 dark:text-slate-400">
                   <span>{T.question} {step + 1}{T.of}{QUESTIONS.length}</span>
                   <span className="rounded-lg bg-brand-50 px-2 py-0.5 font-display text-xs font-extrabold text-brand-700 dark:bg-white/10 dark:text-sun-400">{q.lvl}</span>
                 </div>
@@ -117,7 +117,7 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
                     <div className="mt-1 font-display text-4xl font-extrabold tabular-nums">{res.range}</div>
                   </div>
                   <div className="rounded-2xl border border-slate-200 p-5 dark:border-white/10">
-                    <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">{score}/{QUESTIONS.length}</div>
+                    <div className="text-xs font-semibold text-slate-600 dark:text-slate-400">{score}/{QUESTIONS.length}</div>
                     <div className="mt-1 font-display text-lg font-bold">{T.correct}</div>
                     <div className="mt-3 flex gap-1" aria-hidden="true">
                       {QUESTIONS.map((_, i) => <span key={i} className={`h-2 flex-1 rounded-full ${i < score ? 'bg-emerald-500' : 'bg-slate-200 dark:bg-white/10'}`} />)}
@@ -125,11 +125,11 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
                   </div>
                 </div>
                 <div className="mt-5 rounded-2xl bg-slate-50 p-5 dark:bg-white/5">
-                  <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">{T.recommend}</div>
+                  <div className="text-xs font-semibold text-slate-600 dark:text-slate-400">{T.recommend}</div>
                   <div className="mt-1 font-display text-2xl font-bold">{courses[res.course].title}</div>
                   <div className="mt-1 text-slate-600 dark:text-slate-400">{courses[res.course].desc}</div>
                 </div>
-                <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">{T.approx}</p>
+                <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">{T.approx}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <button type="button" onClick={send} data-magnetic className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white hover:bg-brand-700 dark:bg-sun-400 dark:text-ink-900 sm:flex-none">
                     <span>{T.cta}</span><ArrowRight className="h-5 w-5 shrink-0" />

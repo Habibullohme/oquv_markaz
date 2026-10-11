@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
 import { SITE } from '@/lib/site'
+import { display, sans } from '@/lib/fonts'
 import Script from 'next/script'
 import { themeInitScript } from '@/lib/theme'
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   keywords: ['IELTS', 'CEFR', 'IELTS Toshkent', 'IELTS kurslari', "ingliz tili o'quv markazi", 'IELTS 7', 'mock test'],
   openGraph: { type: 'website', locale: 'uz_UZ', siteName: SITE.name, title: 'IELTS Academy LC — IELTS 7.0+', description: "Band 9 shablonlari, haftalik mock testlar va speaking klub. Bepul sinov darsiga yoziling." },
   twitter: { card: 'summary_large_image' },
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/', languages: { uz: '/', en: '/en' } },
   description: "IELTS va CEFR kurslari: Band 9 shablonlari, haftalik mock testlar va ikki tilli (o'zbek + ingliz) ta'lim.",
   icons: [{ rel: 'icon', url: 'data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\"><text y=\"50%\" x=\"50%\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-size=\"140\">🎓</text></svg>' }],
 }
@@ -35,14 +36,10 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uz" suppressHydrationWarning>
+    <html lang="uz" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800&display=swap" />
       </head>
       <body>
         <div id="preloader" aria-hidden="true">
@@ -56,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </div>
         {children}
-        <Script src="/vendor/lenis.min.js" strategy="afterInteractive" />
+        <Script src="/vendor/lenis.min.js" strategy="lazyOnload" />
         <Script src="/effects.js" strategy="afterInteractive" />
       </body>
     </html>

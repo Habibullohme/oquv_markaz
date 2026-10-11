@@ -40,7 +40,7 @@ export default function Stats({ items }: { items: Dict['stats'] }) {
               <div className="font-display text-3xl md:text-5xl font-extrabold text-brand-700 dark:text-white">
                 <Counter value={s.value} decimals={s.decimals} prefix={s.prefix} suffix={s.suffix} />
               </div>
-              <div className="mt-2 text-sm md:text-base text-slate-500 dark:text-slate-400">{s.label}</div>
+              <div className="mt-2 text-sm md:text-base text-slate-600 dark:text-slate-400">{s.label}</div>
             </div>
           ))}
         </div>
