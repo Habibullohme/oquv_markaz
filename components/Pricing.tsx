@@ -32,7 +32,7 @@ export default function Pricing({ T }: { T: Dict['pricing'] }) {
                         </li>
                       ))}
                     </ul>
-                    <a href="#contact" data-magnetic className={`mt-8 inline-flex justify-center rounded-2xl px-5 py-4 font-bold transition ${pop ? 'bg-sun-400 text-ink-900 hover:bg-sun-300' : 'bg-brand-600 text-white hover:bg-brand-700'}`}><Roll text={`${T.enroll} →`} /></a>
+                    <a href="#contact" data-enroll={`${p.name} · ${p.price}${p.per}`} data-magnetic data-ripple className={`mt-8 inline-flex justify-center rounded-2xl px-5 py-4 font-bold transition ${pop ? 'bg-sun-400 text-ink-900 hover:bg-sun-300' : 'bg-brand-600 text-white hover:bg-brand-700'}`}><Roll text={`${T.enroll} →`} /></a>
                   </div>
                 </div>
               </div>

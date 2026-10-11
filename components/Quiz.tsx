@@ -5,7 +5,7 @@ import Container from './Container'
 import SectionHead from './SectionHead'
 import Roll from './Roll'
 import { cefrFor } from './BandCalculator'
-import { fill, prefillContact } from '@/lib/prefill'
+import { fill, openEnroll, prefillContact } from '@/lib/prefill'
 import type { Dict } from '@/lib/i18n'
 import { firstSet, randomSet, type Question } from '@/lib/quiz-bank'
 
@@ -38,8 +38,8 @@ export default function Quiz({ T, courses }: { T: Dict['quiz'], courses: Dict['c
   // Har safar boshlanganda yangi savollar to'plami (qayta topshirganda oldingisidan farqli)
   function begin() { setQuestions(prev => randomSet(prev)); setPicked(null); setScore(0); setStep(0) }
   function send() {
-    prefillContact(fill(T.prefill, { level, band: res.range, score, course: courses[res.course].title }))
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+    openEnroll()
+    setTimeout(() => prefillContact(fill(T.prefill, { level, band: res.range, score, course: courses[res.course].title })), 0)
   }
 
   return (

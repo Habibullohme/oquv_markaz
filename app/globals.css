@@ -250,3 +250,17 @@ input[type=range].band:active::-webkit-slider-thumb { transform: scale(1.25); }
   .fx [data-reveal="up"], .fx [data-reveal=""] { transform: translateY(28px) scale(.98); }
   .fx [data-reveal="up"][data-from="top"]:not([data-in]) { transform: translateY(-28px) scale(.98); }
 }
+/* ===== Ariza oynasi: telefonda pastdan ko'tariladi, kompyuterda markazda "suzib" chiqadi ===== */
+.sheet { transform: translate3d(0, 105%, 0); transition: transform .55s cubic-bezier(.2,.9,.25,1); }
+.sheet.is-open { transform: translate3d(0, 0, 0); }
+@media (min-width: 768px) {
+  .sheet { transform: translate3d(-50%, calc(-50% + 60px), 0) scale(.94); opacity: 0; transition: transform .55s cubic-bezier(.2,.9,.25,1), opacity .35s; }
+  .sheet.is-open { transform: translate3d(-50%, -50%, 0) scale(1); opacity: 1; }
+}
+.sheet .sheet-item { opacity: 0; transform: translate3d(0, 18px, 0); transition: opacity .4s, transform .5s cubic-bezier(.2,.8,.2,1); }
+.sheet.is-open .sheet-item { opacity: 1; transform: none; transition-delay: calc(var(--i) * 70ms + 180ms); }
+
+/* ===== Bosilganda to'lqin (ripple) ===== */
+[data-ripple] { position: relative; overflow: hidden; isolation: isolate; }
+.fx-ripple { position: absolute; border-radius: 9999px; pointer-events: none; background: currentColor; opacity: .25; transform: scale(0); animation: ripple .6s cubic-bezier(.2,.8,.2,1) forwards; }
+@keyframes ripple { to { transform: scale(1); opacity: 0; } }

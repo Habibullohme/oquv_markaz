@@ -7,3 +7,9 @@ export function prefillContact(message: string) {
 
 export const fill = (tpl: string, vars: Record<string, string | number>) =>
   tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''))
+
+// Ariza oynasini ochish (pastdan ko'tariladigan panel). Ixtiyoriy: tanlangan kurs/tarif nomi
+export const ENROLL_EVENT = 'enroll-open'
+export function openEnroll(item?: string) {
+  window.dispatchEvent(new CustomEvent(ENROLL_EVENT, { detail: item }))
+}

@@ -33,7 +33,7 @@ export default function Courses({ T }: { T: Dict['courses'] }) {
                     return <li key={m} className="inline-flex items-center gap-1.5 rounded-xl chip px-3 py-1.5 text-sm "><Icon className="h-4 w-4 opacity-70" />{m}</li>
                   })}
                 </ul>
-                <a href="#contact" data-magnetic className="mt-8 inline-flex items-center gap-2 self-start rounded-full chip px-5 py-3 font-bold ">
+                <a href="#contact" data-enroll={c.title} data-magnetic data-ripple className="mt-8 inline-flex items-center gap-2 self-start rounded-full chip px-5 py-3 font-bold ">
                   {T.more} <ArrowUpRight className="h-5 w-5 transition group-hover:rotate-45" />
                 </a>
                 </div>

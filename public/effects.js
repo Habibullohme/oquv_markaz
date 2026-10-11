@@ -46,7 +46,7 @@
   // ---- Silliq scroll (Lenis) ----
   function initLenis() {
     if (reduce || window.__lenis || !window.Lenis) return;
-    try { window.__lenis = new window.Lenis({ autoRaf: true, lerp: 0.09, anchors: { offset: -80 } }); } catch (e) {}
+    try { window.__lenis = new window.Lenis({ autoRaf: true, lerp: 0.09 }); } catch (e) {}
   }
   if (window.Lenis) initLenis(); else addEventListener('load', initLenis);
 
@@ -142,6 +142,47 @@
     kick();
   });
   kick();
+
+  // ---- Bosilganda to'lqin (data-ripple) ----
+  document.addEventListener('pointerdown', function (e) {
+    if (reduce) return;
+    var el = e.target.closest && e.target.closest('[data-ripple]');
+    if (!el) return;
+    var r = el.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2.2;
+    var sp = document.createElement('span');
+    sp.className = 'fx-ripple';
+    sp.style.width = sp.style.height = d + 'px';
+    sp.style.left = (e.clientX - r.left - d / 2) + 'px';
+    sp.style.top = (e.clientY - r.top - d / 2) + 'px';
+    el.appendChild(sp);
+    setTimeout(function () { sp.remove(); }, 650);
+  }, { passive: true });
+
+  // ---- Silliq scroll havolalar uchun (Lenis yo'q bo'lganda — telefon/planshet) ----
+  function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function smoothTo(y) {
+    if (window.__lenis) { if (window.__lenis.isStopped) window.__lenis.start(); window.__lenis.scrollTo(y, { duration: 1.2 }); return; }
+    var from = scrollY, dist = y - from, dur = clamp(Math.abs(dist) / 3, 500, 1100), t0 = performance.now();
+    if (reduce) { scrollTo(0, y); return; }
+    (function step(t) {
+      var p = clamp((t - t0) / dur, 0, 1);
+      scrollTo(0, from + dist * ease(p));
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  window.__smoothTo = smoothTo;
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey) return;
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href');
+    var target = id === '#home' || id === '#' ? document.body : document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    var y = target === document.body ? 0 : target.getBoundingClientRect().top + scrollY - 72;
+    smoothTo(Math.max(0, y));
+    if (history.replaceState) history.replaceState(null, '', id === '#home' ? location.pathname : id);
+  });
 
   // ---- Konfetti ----
   window.__confetti = function (x, y) {

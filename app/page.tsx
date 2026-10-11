@@ -8,6 +8,7 @@ import BigText from '@/components/BigText'
 import Features from '@/components/Features'
 import Quiz from '@/components/Quiz'
 import ToTop from '@/components/ToTop'
+import EnrollSheet from '@/components/EnrollSheet'
 import Courses from '@/components/Courses'
 import Method from '@/components/Method'
 import Teachers from '@/components/Teachers'
@@ -60,6 +61,7 @@ export default function Page() {
       <TelegramFab label={T.telegram} />
       <MobileBar T={T} />
       <ToTop label={T.toTop} />
+      <EnrollSheet T={T} />
     </>
   )
 }

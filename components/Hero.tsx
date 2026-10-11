@@ -48,8 +48,8 @@ export default function Hero({ T }: { T: Dict }) {
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">{T.hero.subtitle}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#contact" data-magnetic className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white shadow-soft hover:bg-brand-700 transition"><Roll text={`${T.hero.cta1} →`} /></a>
-            <a href="#courses" data-magnetic className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-white/15 px-6 py-4 font-bold hover:bg-white dark:hover:bg-white/5 transition"><Roll text={T.hero.cta2} /></a>
+            <a href="#contact" data-magnetic data-ripple className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-4 font-bold text-white shadow-soft hover:bg-brand-700 transition"><Roll text={`${T.hero.cta1} →`} /></a>
+            <a href="#courses" data-magnetic data-ripple className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-white/15 px-6 py-4 font-bold hover:bg-white dark:hover:bg-white/5 transition"><Roll text={T.hero.cta2} /></a>
           </div>
           <div className="mt-10 flex items-center gap-4">
             <div className="flex -space-x-3">
